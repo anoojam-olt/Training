@@ -1,0 +1,89 @@
+body {
+    margin: auto;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 50px;
+    padding-top: 90px;
+}
+
+#main {
+    align-items: center;
+    justify-content: center;
+}
+
+#mainForm {
+    background-color: rgb(128, 147, 147);
+    border: solid 2px;
+    margin-bottom: 30px;
+}
+
+#buttonStyle {
+    text-align: center;
+    margin-top: 30px;
+}
+
+#cancelButton {
+    width: 77px;
+}
+#firstName{
+    display:none
+}
+
+/* #dobValue{
+    display: none;
+} */
+#sscValue{
+    display: none;
+}
+#addressValue{
+    display: none;
+}
+#genderSelectError{
+    display: none;
+}
+#phoneNumber{
+    display: none;
+}
+#emailValue{
+    display: none;
+}
+#communicationValue{
+    display: none;
+}
+#employeeIdValue{
+    display: none;
+}
+#jobTitleSpan{
+    display: none;
+}
+#departmentValue{
+    display: none;
+}
+#salaryValue{
+    display: none;
+}
+#hobbiesValue{
+    display: none;
+}
+#addNotesValue{
+    display: none;
+}
+#dobError{
+    display: none;
+}
+#dobValue{
+    display:none;
+}
+
+.communication {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+}
+.form-control:hover {
+    background-color: rgb(213, 212, 212);
+    cursor: pointer;
+    
+}
