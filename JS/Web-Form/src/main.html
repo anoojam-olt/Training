@@ -1,27 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
+    
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JavaScript Form</title>
     <!-- Include Bootstrap CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="/style.css">
-    <script src="/script.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"
+        integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous">
+    </script>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
 </head>
+
 <body>
     <div class="container mt-5" id="containerBox">
-       
-        <form  id="mainForm" name="myForm" action="form2.html">
+        <form id="mainForm" name="myForm" action="index.html">
             <h1>Form</h1>
             <div class="row p-5" id="main">
                 <div class="col-md-6">
                     <div class="form-group">
                         <span id="requiredError"></span>
-                        <label for="fullname" >Full Name:</label>
+                        <label for="fullname">Full Name:</label>
                         <input type="text" class="form-control" id="fullname" name="fullname">
                         <div class="namename">
                             <span id="firstName" class="text-danger"></span>
@@ -38,7 +45,7 @@
                                 <input class="form-check-input" type="radio" name="gender" id="female" value="female">
                                 <label class="form-check-label" for="female">Female</label>
                             </div>
-                            <span id="genderSelectError"  class="text-danger"></span>
+                            <span id="genderSelectError" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="form-group">
@@ -62,7 +69,6 @@
                         <input type="tel" class="form-control" id="phone" name="phone">
                         <span id="phoneNumber" class="text-danger"></span>
                     </div>
-             
                     <div class="form-group">
                         <label for="email">Email:</label>
                         <input type="email" class="form-control" id="email" name="email">
@@ -72,22 +78,25 @@
                         <label>Preferred Method of Communication:</label>
                         <div class="communication">
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="emailCheckbox" name="communication" value="email">
+                                <input class="form-check-input" type="checkbox" id="emailCheckbox" name="communication"
+                                    value="email">
                                 <label class="form-check-label" for="emailCheckbox">Email</label>
-                            </div> 
+                            </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="postCheckbox" name="communication" value="post">
+                                <input class="form-check-input" type="checkbox" id="postCheckbox" name="communication"
+                                    value="post">
                                 <label class="form-check-label" for="postCheckbox">Post</label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="phoneCheckbox" name="communication" value="phone">
+                                <input class="form-check-input" type="checkbox" id="phoneCheckbox" name="communication"
+                                    value="phone">
                                 <label class="form-check-label" for="phoneCheckbox">Phone</label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="faxCheckbox" name="communication" value="fax">
+                                <input class="form-check-input" type="checkbox" id="faxCheckbox" name="communication"
+                                    value="fax">
                                 <label class="form-check-label" for="faxCheckbox">Fax</label>
                             </div>
-                           
                         </div>
                         <span id="communicationValue" class="text-danger"></span>
                     </div>
@@ -118,7 +127,7 @@
                     </div>
                     <div class="form-group">
                         <label for="salary">Salary:</label>
-                        <input type="text" class="form-control" id="salary" name="salary" >
+                        <input type="text" class="form-control" id="salary" name="salary">
                         <span id="salaryValue" class="text-danger"></span>
                     </div>
                     <div class="form-group">
@@ -132,20 +141,16 @@
                         <span id="addNotesValue" class="text-danger"></span>
                     </div>
                     <div class="form-group" id="buttonStyle">
-                        <button type="button" class="btn btn-danger" id="cancelButton" >Clear</button>
-                        <button type="submit" class="btn btn-primary" id="submitButton" >Submit</button>
-                        
+                        <button type="button" class="btn btn-danger" id="cancelButton">Clear</button>
+                        <button type="submit" class="btn btn-primary" id="submitButton">Submit</button>
                     </div>
-
                 </div>
-            
             </div>
-            
         </form>
-    
 
-    <!-- Include Bootstrap JS -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</div>
+        <!-- Include Bootstrap JS -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    </div>
 </body>
+
 </html>
