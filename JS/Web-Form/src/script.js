@@ -46,11 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const additionalNotes = document.getElementById('notes');
     const notesError = document.getElementById('addNotesValue');
 
-
-
-
     submitButton.addEventListener('click', (event) => {
-
 
         const name = nameValue.value;
         const dob = dobInput.value;
@@ -66,17 +62,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const notesAdditional = additionalNotes.value;
         employeeId.value = generateRandomNumber();
 
-
-
-
         //Mandatory field validation
 
         if (name == "" || genderInputs == "" || dob == "" || ssn == "" || communicationInputs == "" || address == "" || number == "" || email == "" || department == "" || job == "" || salary == "" || hobbies == "") {
-            
+     
             alert('All fields are required');
             event.preventDefault();
         }
-
 
         //Name validation
 
@@ -91,7 +83,6 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             nameError.textContent = '';
         }
-
 
         //Date of birth validation
 
@@ -123,11 +114,8 @@ document.addEventListener('DOMContentLoaded', () => {
             dobError.style.display = 'block';
             dobError.textContent = "Age must be between 18 and 100 years old";
             event.preventDefault();
-
         }
     }
-
-
         // Gender validation
 
         var genderChecked = false;
@@ -145,7 +133,6 @@ document.addEventListener('DOMContentLoaded', () => {
             errorGender.textContent = '';
         }
 
-
         //Social Security Number Validation
 
         if (!/^[0-9\-]+$/.test(ssn) && ssn.length != 0) {
@@ -160,7 +147,6 @@ document.addEventListener('DOMContentLoaded', () => {
             sscValue.textContent = '';
         }
 
-
         //Address validation
 
         if (!/^[a-zA-Z0-9\s, -]+$/.test(address) && address.length != 0) {
@@ -170,7 +156,6 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             addressError.textContent = '';
         }
-
 
         //Phone Number validation
 
@@ -186,7 +171,6 @@ document.addEventListener('DOMContentLoaded', () => {
             phoneSpan.textContent = '';
         }
 
-
         //Email  validation
 
         if (email.length > 50 && email.length != 0) {
@@ -201,8 +185,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             emailSpan.textContent = '';
         }
-
-
+        
         // Preferred communication validation
 
         var communicationChecked = false;
@@ -219,7 +202,6 @@ document.addEventListener('DOMContentLoaded', () => {
             communicationError.textContent = '';
         }
 
-
         //Employee Id validation
 
         let employeeCodeCounter = 1;
@@ -227,7 +209,6 @@ document.addEventListener('DOMContentLoaded', () => {
         function generateRandomNumber() {
             return Math.floor(Math.random() * 10) + 1; //Automatic number generation 
         }
-
 
         emp.disabled = true;
         if (emp.length > 2 || emp.length < 0) {
@@ -254,7 +235,6 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             jobTitleSpan.textContent = '';
         }
-
 
         //Department validation
 
