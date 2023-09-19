@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         //Mandatory field validation
 
-        if (name == "" || genderInputs == "" || dob == "" || ssn == "" || communicationInputs == "" || address == "" || number == "" || email == "" || emp == "" || department == "" || job == "" || salary == "" || hobbies == "") {
+        if (name == "" || genderInputs == "" || dob == "" || ssn == "" || communicationInputs == "" || address == "" || number == "" || email == "" || department == "" || job == "" || salary == "" || hobbies == "") {
             
             alert('All fields are required');
             event.preventDefault();
