@@ -102,6 +102,7 @@ $(document).ready(function() {
   $eqlSym.click(() => {
 
     calculationOutput = math.evaluate(inputHistory);
+    calculationOutput = Number(calculationOutput.toFixed(2));
     console.log(calculationOutput);
     $('#displayOpr').html('=');
     $('#displayNum').html(calculationOutput);
