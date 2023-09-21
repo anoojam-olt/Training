@@ -1,20 +1,10 @@
-body {
-    margin: auto;
-}
-
-h1 {
-    text-align: center;
-    margin-bottom: 50px;
-    padding-top: 90px;
-}
-
 #main {
     align-items: center;
     justify-content: center;
 }
 
 #mainForm {
-    background-color: rgb(128, 147, 147);
+    background-color: rgb(32, 32, 45);
     border: solid 2px;
     margin-bottom: 30px;
 }
@@ -27,63 +17,25 @@ h1 {
 #cancelButton {
     width: 77px;
 }
-/* #firstName{
-    display:none
+.container-body {
+    margin: auto;
+    color: #f0f8ff;
 }
 
-/* #dobValue{
-    display: none;
-} */
-/* #sscValue{
-    display: none;
+.reg-form {
+    text-align: center;
+    margin-bottom: 50px;
+    padding-top: 90px;
 }
-#addressValue{
-    display: none;
-}
-#genderSelectError{
-    display: none;
-}
-#phoneNumber{
-    display: none;
-}
-#emailValue{
-    display: none;
-}
-#communicationValue{
-    display: none;
-}
-#employeeIdValue{
-    display: none;
-}
-#jobTitleSpan{
-    display: none;
-}
-#departmentValue{
-    display: none;
-}
-#salaryValue{
-    display: none;
-}
-#hobbiesValue{
-    display: none;
-}
-#addNotesValue{
-    display: none;
-}
-#dobError{
-    display: none;
-}
-#dobValue{
-    display:none;
-}  */
 
 .communication {
     display: flex;
     justify-content: space-between;
     flex-direction: row;
 }
+
 .form-control:hover {
     background-color: rgb(213, 212, 212);
     cursor: pointer;
-    
+   
 }

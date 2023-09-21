@@ -20,6 +20,13 @@ document.addEventListener('DOMContentLoaded', function () {
         formDataArray.push(formData);
     }
 
+    // Clear button functionality
+    const clearButton = document.getElementById('cancelButton');
+    clearButton.addEventListener('click', function () {
+        form.reset();
+        clearErrorMessages(); // Clear any error messages
+    });
+
     form.addEventListener('submit', function (event) {
         let valid = true;
 
@@ -35,23 +42,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
         function validateText(element, minLength, maxLength, regexPattern, errorElementId, errorMessage) {
             const value = element.value.trim();
-            if (value === '') {
-                showError(errorElementId, 'This field is required.');
-                valid = false;
-            } else if (value.length < minLength) {
-                showError(errorElementId, `Minimum length is ${minLength}.`);
-                valid = false;
-            } else if (value.length > maxLength) {
-                showError(errorElementId, `Maximum length is ${maxLength}.`);
-                valid = false;
-            } else if (!regexPattern.test(value)) {
+            if (value === '' || value.length < minLength || value.length > maxLength || !regexPattern.test(value)) {
                 showError(errorElementId, errorMessage);
                 valid = false;
             } else {
                 clearError(errorElementId);
             }
         }
-        
+
         function validateDob(element, errorElementId) {
             const dob = element.value.trim();
             if (dob === '' || !isValidDateFormat(dob)) {
@@ -154,20 +152,19 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
 
-        validateText(form.elements.fullname, 3, 20, /^[A-Za-z\s]+$/, 'firstName', 'Invalid full name. Only letters and spaces are allowed.');
+        validateText(form.elements.fullname, 3, 20, /^[A-Za-z\s]+$/, 'firstName', 'Invalid full name');
         validateRadio('gender', 'genderSelectError', 'Gender is mandatory');
         validateDob(form.elements.dob, 'dobValue'); // Validate DOB field
-        validateText(form.elements.ssn, 7, 9, /^[0-9-]+$/, 'sscValue', ' Use only numbers and dashes. Length min.7 & max.9 ');
-        validateText(form.elements.address, 1, 100, /^[A-Za-z0-9\s,.-]+$/, 'addressValue', 'Special characters are not allowed.');
-        validateText(form.elements.phone, 7, 10, /^[0-9]+$/, 'phoneNumber', 'Invalid phone number. Use only numbers.');
+        validateText(form.elements.ssn, 7, 9, /^[0-9-]+$/, 'sscValue', 'Invalid social security number');
+        validateText(form.elements.address, 1, 100, /^[A-Za-z0-9\s,.-]+$/, 'addressValue', 'Invalid address');
+        validateText(form.elements.phone, 7, 10, /^[0-9]+$/, 'phoneNumber', 'Invalid phone number');
         validateText(form.elements.email, 1, 50, /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, 'emailValue', 'Invalid email address');
         validateCheckbox('communication', 'communicationValue', 'Select at least one communication method');
         form.elements.employeeId.value = Math.floor(Math.random() * 9) + 1;
         validateText(form.elements.jobTitle, 3, 50, /^[A-Za-z\s]+$/, 'jobTitleSpan', 'Invalid job title');
         validateSelect(form.elements.department, 'departmentValue', 'Select a department');
         validateNumber(form.elements.salary, 3, 10, 'salaryValue', 'Invalid salary');
-        validateText(form.elements.hobbies, 3, 25, /^[A-Za-z,\s-]+$/, 'hobbiesValue', 'Invalid hobbies. Only letters, commas, and hyphens are allowed.');
-        validateText(form.elements.notes, 0, 100, /^[A-Za-z0-9\s,.]+$/, 'addNotesValue', 'Invalid additional notes');
+        validateText(form.elements.hobbies, 3, 25, /^[A-Za-z,\s-]+$/, 'hobbiesValue', 'Invalid hobbies');
 
         // If validation is successful, save the form data
         if (valid) {
@@ -189,7 +186,9 @@ document.addEventListener('DOMContentLoaded', function () {
             };
 
             saveFormData(formData);
+
             form.reset();
+
             addFormDataToTable(formData);
             event.preventDefault(); // Prevent form submission (you can remove this if you want to submit the form to a server)
         }
@@ -197,5 +196,6 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!valid) {
             event.preventDefault(); // Prevent form submission if there are validation errors
         }
+
     });
 });
