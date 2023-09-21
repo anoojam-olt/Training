@@ -1,4 +1,3 @@
-
 $(document).ready(function() {
   const $butnOne = $('#numOne');
   const $butnTwo = $('#numTwo');
@@ -57,9 +56,11 @@ $(document).ready(function() {
   let operator = 0;
   let expression = 0;
 
-  function showNumber(numbers) {
+  function showNumber(numbers)
+ {
     clr();
-    $('#displayNum').append(numbers);
+    $('#displayNum').append(numbers)
+;
     if (hasOPerator == true) secondNum();
   }
 
