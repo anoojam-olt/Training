@@ -1,34 +1,28 @@
 document.addEventListener('DOMContentLoaded', function () {
-  const form = document.getElementById('mainForm');
-
-  // Generate and set an initial Employee ID
+  const form = document.querySelector('#mainForm');
+  const clearButton = document.querySelector('#cancelButton');
   const employeeIdInput = form.elements.employeeId;
   employeeIdInput.value = generateRandomEmployeeId();
 
-  
-  // Function to generate a random Employee ID between 1 and 9
   function generateRandomEmployeeId() {
-      return Math.floor(Math.random() * 9) + 1;
+    return Math.floor(Math.random() * 9) + 1;
   }
-  
 
-  // Clear button functionality
-  const clearButton = document.getElementById('cancelButton');
   clearButton.addEventListener('click', function () {
-      form.reset();
-      clearErrorMessages(); // Clear any error messages
+    form.reset();
+    clearErrorMessages(); // Clear any error messages
   });
 
   form.addEventListener('submit', function (event) {
     let valid = true;
 
     function showError(elementId, errorMessage) {
-      const errorElement = document.getElementById(elementId);
+      const errorElement = form.querySelector(`#${elementId}`);
       errorElement.textContent = errorMessage;
     }
 
     function clearError(elementId) {
-      const errorElement = document.getElementById(elementId);
+      const errorElement = form.querySelector(`#${elementId}`);
       errorElement.textContent = '';
     }
 
@@ -57,22 +51,23 @@ document.addEventListener('DOMContentLoaded', function () {
         }
       }
     }
- // Function to check if the date is in yyyy-mm-dd format
- function isValidDateFormat(date) {
-  const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
-  return dateRegex.test(date);
-}
+    // Function to check if the date is in yyyy-mm-dd format
+    function isValidDateFormat(date) {
+      const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+      return dateRegex.test(date);
+    }
 
-// Function to calculate age from date of birth
-function calculateAge(dob) {
-  const dobDate = new Date(dob);
-  const currentDate = new Date();
-  const age = currentDate.getFullYear() - dobDate.getFullYear();
-  if (currentDate.getMonth() < dobDate.getMonth() || (currentDate.getMonth() === dobDate.getMonth() && currentDate.getDate() < dobDate.getDate())) {
-    return age - 1;
-  }
-  return age;
-}
+    // Function to calculate age from date of birth
+    function calculateAge(dob) {
+      const dobDate = new Date(dob);
+      const currentDate = new Date();
+      const age = currentDate.getFullYear() - dobDate.getFullYear();
+      if (currentDate.getMonth() < dobDate.getMonth() || (currentDate.getMonth() === dobDate.getMonth() && currentDate.getDate() < dobDate.getDate())) {
+        return age - 1;
+      }
+      return age;
+    }
+
     function showError(elementId, errorMessage) {
       const errorElement = document.getElementById(elementId);
       errorElement.textContent = errorMessage;
@@ -133,6 +128,33 @@ function calculateAge(dob) {
       }
     }
 
+    function validateAdditionalNotes(element, minLength, maxLength, regexPattern, errorElementId, errorMessage) {
+      const value = element.value.trim();
+      if (value !== '' && (value.length < minLength || value.length > maxLength || !regexPattern.test(value))) {
+        showError(errorElementId, errorMessage);
+        valid = false;
+      } else {
+        clearError(errorElementId);
+      }
+    } 
+    const alphanumericWithSpacesCommasDotsRegex = /^[A-Za-z0-9\s,.]*$/;
+
+    function validateAdditionalNotes(element, regexPattern, errorElementId, errorMessage) {
+      const value = element.value.trim();
+      if (value !== '' && !regexPattern.test(value)) {
+        showError(errorElementId, errorMessage);
+        valid = false;
+      } else {
+        clearError(errorElementId);
+      }
+    }
+
+    validateAdditionalNotes(
+      form.elements.notes,
+      alphanumericWithSpacesCommasDotsRegex,
+      'addNotesValue', // Error element ID
+      'Invalid additional notes'
+    );
     validateText(form.elements.fullname, 3, 20, /^[A-Za-z\s]+$/, 'firstName', 'Invalid full name');
     validateRadio('gender', 'genderSelectError', 'Gender is mandatory');
     validateDob(form.elements.dob, 'dobValue'); // Validate DOB field
@@ -146,11 +168,11 @@ function calculateAge(dob) {
     validateSelect(form.elements.department, 'departmentValue', 'Select a department');
     validateNumber(form.elements.salary, 3, 10, 'salaryValue', 'Invalid salary');
     validateText(form.elements.hobbies, 3, 25, /^[A-Za-z,\s-]+$/, 'hobbiesValue', 'Invalid hobbies');
-    
+
     if (!valid) {
-      event.preventDefault(); // Prevent form submission if there are validation errors
+      event.preventDefault(); 
     }
-   
+
   });
-  
+
 });
