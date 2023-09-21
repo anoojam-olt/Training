@@ -27,14 +27,14 @@ h1 {
 #cancelButton {
     width: 77px;
 }
-#firstName{
+/* #firstName{
     display:none
 }
 
 /* #dobValue{
     display: none;
 } */
-#sscValue{
+/* #sscValue{
     display: none;
 }
 #addressValue{
@@ -75,7 +75,7 @@ h1 {
 }
 #dobValue{
     display:none;
-}
+}  */
 
 .communication {
     display: flex;

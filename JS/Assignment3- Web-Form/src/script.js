@@ -157,8 +157,8 @@ document.addEventListener('DOMContentLoaded', function () {
         validateText(form.elements.fullname, 3, 20, /^[A-Za-z\s]+$/, 'firstName', 'Invalid full name. Only letters and spaces are allowed.');
         validateRadio('gender', 'genderSelectError', 'Gender is mandatory');
         validateDob(form.elements.dob, 'dobValue'); // Validate DOB field
-        validateText(form.elements.ssn, 7, 9, /^[0-9-]+$/, 'sscValue', 'Invalid social security number. Use only numbers and dashes.');
-        validateText(form.elements.address, 1, 100, /^[A-Za-z0-9\s,.-]+$/, 'addressValue', 'Invalid address. Special characters are not allowed.');
+        validateText(form.elements.ssn, 7, 9, /^[0-9-]+$/, 'sscValue', ' Use only numbers and dashes. Length min.7 & max.9 ');
+        validateText(form.elements.address, 1, 100, /^[A-Za-z0-9\s,.-]+$/, 'addressValue', 'Special characters are not allowed.');
         validateText(form.elements.phone, 7, 10, /^[0-9]+$/, 'phoneNumber', 'Invalid phone number. Use only numbers.');
         validateText(form.elements.email, 1, 50, /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, 'emailValue', 'Invalid email address');
         validateCheckbox('communication', 'communicationValue', 'Select at least one communication method');
