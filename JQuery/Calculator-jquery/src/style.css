@@ -18,8 +18,19 @@
     background-color: #939993;
 }
 
-#clearDisplayScreen{
+#clearDisplayScreen {
     background-color: #d81a1a;
+}
+
+#butnSub,
+#butnAdd,
+#butnMul,
+#butnDiv {
+    background-color: #939993;
+}
+
+#rowOne {
+    margin-top: 90px;
 }
 
 .container {
@@ -37,15 +48,4 @@
     margin: 10px;
     border-radius: 15px;
     margin-top: 10px;
-}
-
-#butnSub,
-#butnAdd,
-#butnMul,
-#butnDiv {
-    background-color: #939993;
-}
-
-#rowOne {
-    margin-top: 90px;
 }
