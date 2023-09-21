@@ -1,0 +1,51 @@
+#display-Column {
+    height: 80px;
+    background-color: rgb(51, 142, 89);
+    position: absolute;
+    width: 425px;
+    text-align: right;
+}
+
+#displayNum,
+#displayOpr {
+    text-align: right;
+    font-size: 23px;
+}
+
+#equalSymbol {
+    margin-left: 0;
+    width: 70px;
+    background-color: #939993;
+}
+
+#clearDisplayScreen{
+    background-color: #d81a1a;
+}
+
+.container {
+    width: 460px;
+    height: 540px;
+    background-color: rgb(54, 54, 54);
+}
+
+.btn {
+    background-color: rgb(97, 96, 96);
+    color: #ffffff;
+    width: 85px;
+    height: 50px;
+    font-size: 20px;
+    margin: 10px;
+    border-radius: 15px;
+    margin-top: 10px;
+}
+
+#butnSub,
+#butnAdd,
+#butnMul,
+#butnDiv {
+    background-color: #939993;
+}
+
+#rowOne {
+    margin-top: 90px;
+}
