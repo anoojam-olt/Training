@@ -1,124 +1,123 @@
-$(document).ready(function() {
-  const $butnOne = $('#numOne');
-  const $butnTwo = $('#numTwo');
-  const $butnThree = $('#numThree');
-  const $butnFour = $('#numFour');
-  const $butnFive = $('#numFive');
-  const $butnSix = $('#numSix');
-  const $butnSeven = $('#numSeven');
-  const $butnEight = $('#numEight');
-  const $butnNine = $('#numNine');
-  const $butnZero = $('#numZero');
-  const $butnPoint = $('#numPoint');
-  const $addition = $('#butnAdd');
-  const $subtraction = $('#butnSub');
-  const $multiplication = $('#butnMul');
-  const $division = $('#butnDiv');
-
-  const $eqlSym = $('#equalSymbol');
-  const $clearButton = $('#clearDisplayScreen');
-
-  $butnOne.click(() => addNumToDisplay('1'));
-  $butnTwo.click(() => addNumToDisplay('2'));
-  $butnThree.click(() => addNumToDisplay('3'));
-
-  $butnFour.click(() => addNumToDisplay('4'));
-  $butnFive.click(() => addNumToDisplay('5'));
-  $butnSix.click(() => addNumToDisplay('6'));
-
-  $butnSeven.click(() => addNumToDisplay('7'));
-  $butnEight.click(() => addNumToDisplay('8'));
-  $butnNine.click(() => addNumToDisplay('9'));
-
-  $butnZero.click(() => addNumToDisplay('0'));
-  $butnPoint.click(() => addNumToDisplay('.'));
-
-  $addition.click(() => addOprToDisplay('+'));
-  $subtraction.click(() => addOprToDisplay('-'));
-  $multiplication.click(() => addOprToDisplay('*'));
-  $division.click(() => addOprToDisplay('/'));
-
-  $clearButton.click(() => clearDis());
-
-  function clearDis() {
-    $('#displayNum').html('');
-    $('#displayOpr').html('');
-    inputHistory = 0;
-    currentInput = 0;
-  }
-
-  let inputHistory = 0;
-  let calculationOutput = 0;
-  let currentInput = 0;
-  let hasOPerator = false;
+$(document).ready(function () {
+  const calculatorContainer = document.querySelector('.container');
+  let inputHistory = '';
+  let currentInput = '';
+  let hasOperator = false;
   let equal = false;
   let count = 0;
-  let operator = 0;
-  let expression = 0;
+  let operator = '';
+  let expression = '';
 
-  function showNumber(numbers)
- {
-    clr();
-    $('#displayNum').append(numbers)
-;
-    if (hasOPerator == true) secondNum();
-  }
+  calculatorContainer.addEventListener('click', function (event) {
+      const target = event.target;
+      if (target.tagName === 'BUTTON') {
+          const buttonValue = target.textContent;
 
-  function addNumToDisplay(values) {
-    if (values === '.') {
-      count++;
-    }
-
-    if (values === '.' && currentInput.includes('.') || count > 1) {
-      count = 1;
-      return;
-    }
-
-    currentInput = values;
-    showNumber(currentInput);
-    inputHistory += currentInput;
-    console.log(inputHistory);
-    operator = 0;
-  }
-
-  function addOprToDisplay(operators) {
-    hasOPerator = true;
-
-    $('#displayOpr').html(operators);
-    if (operator != operators) {
-      operator = operators;
-      expression += operator;
-      inputHistory += operators;
-      count = 0;
-      return count;
-    }
-  }
-
-  function secondNum() {
-    $('#displayNum').html(currentInput);
-    $('#displayOpr').html('');
-    hasOPerator = false;
-  }
-
-  $eqlSym.click(() => {
-
-    calculationOutput = math.evaluate(inputHistory);
-    calculationOutput = Number(calculationOutput.toFixed(2));
-    console.log(calculationOutput);
-    $('#displayOpr').html('=');
-    $('#displayNum').html(calculationOutput);
-    inputHistory = 0;
-    inputHistory += calculationOutput;
-    operator = 0;
-    equal = true;
-    count = 0;
+          switch (buttonValue) {
+              case 'C':
+                  clearDisplay();
+                  break;
+              case '=':
+                  calculate();
+                  break;
+              case '+':
+              case '-':
+              case '*':
+              case '/':
+                  addOperatorToDisplay(buttonValue);
+                  break;
+              case '.':
+                  addDecimalPointToDisplay();
+                  break;
+              default:
+                  addNumberToDisplay(buttonValue);
+                  break;
+          }
+      }
   });
 
-  function clr() {
-    if (equal == true) {
-      $('#displayNum').html('');
-      $('#displayOpr').html('');
-    }
-    equal = false;
+  function clearDisplay() {
+      document.querySelector('#displayNum').innerHTML = '';
+      document.querySelector('#displayOpr').innerHTML = '';
+      inputHistory = '';
+      currentInput = '';
+      hasOperator = false;
+      operator = '';
+      expression = '';
+      equal = false;
+      count = 0;
+  }
+
+  function addNumberToDisplay(value) {
+      if (value === '.') {
+          if (!currentInput.includes('.')) {
+              currentInput += '.';
+              showNumber(currentInput);
+              inputHistory += '.';
+          }
+      } else {
+          if (hasOperator) {
+              currentInput = ''; // Clear currentInput when an operator is clicked
+          }
+          currentInput += value;
+          showNumber(currentInput);
+          inputHistory += value;
+          operator = '';
+      }
+  }
+
+  function addOperatorToDisplay(oper) {
+      hasOperator = true;
+
+      document.querySelector('#displayOpr').innerHTML = oper;
+      if (operator !== oper) {
+          operator = oper;
+          expression += operator;
+          inputHistory += operator;
+          count = 0;
+      }
+  }
+
+  function addDecimalPointToDisplay() {
+      if (!currentInput.includes('.')) {
+          currentInput += '.';
+          showNumber(currentInput);
+          inputHistory += '.';
+      }
+  }
+
+  function showNumber(numbers)
+{
+      clearIfEqual();
+      document.querySelector('#displayNum').innerHTML = numbers;
+      if (hasOperator) {
+          showSecondNumber();
+      }
+  }
+
+  function showSecondNumber() {
+      document.querySelector('#displayNum').innerHTML = currentInput;
+      document.querySelector('#displayOpr').innerHTML = '';
+      hasOperator = false;
+  }
+
+  function calculate() {
+      if (inputHistory && !equal) {
+          const calculationOutput = math.evaluate(inputHistory);
+          document.querySelector('#displayOpr').innerHTML = '=';
+          document.querySelector('#displayNum').innerHTML = Number(calculationOutput.toFixed(12));
+          inputHistory = calculationOutput.toString();
+          operator = '';
+          equal = true;
+          count = 0;
+      }
+  }
+
+  function clearIfEqual() {
+      if (equal) {
+          document.querySelector('#displayNum').innerHTML = '';
+          document.querySelector('#displayOpr').innerHTML = '';
+      }
+      equal = false;
   }
 });
