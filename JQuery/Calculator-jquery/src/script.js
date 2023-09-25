@@ -51,18 +51,22 @@ $(document).ready(function () {
   function addNumberToDisplay(value) {
       if (value === '.') {
           if (!currentInput.includes('.')) {
+            if (currentInput.length < 30) {
               currentInput += '.';
               showNumber(currentInput);
               inputHistory += '.';
           }
+        }
       } else {
           if (hasOperator) {
               currentInput = ''; // Clear currentInput when an operator is clicked
           }
+          if (currentInput.length < 30) {
           currentInput += value;
           showNumber(currentInput);
           inputHistory += value;
           operator = '';
+          }
       }
   }
 

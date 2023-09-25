@@ -41,20 +41,19 @@
                             <div class="form-check">
                                 <input class="form-check-input" type="radio" name="gender" id="male" value="male">
                                 <label class="form-check-label" for="male">Male</label>
-                            </div>
+                            </div> &nbsp &nbsp &nbsp
                             <div class="form-check">
                                 <input class="form-check-input" type="radio" name="gender" id="female" value="female">
                                 <label class="form-check-label" for="female">Female</label>
                             </div>
-                            <span id="genderSelectError" class="text-danger"></span>
                         </div>
+                        <span id="genderSelectError" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label for="dob">Date of Birth:</label>
                         <input type="text" class="form-control" id="dob" name="dob" placeholder="YYYY-MM-DD">
                         <span id="dobValue" class="text-danger"></span>
                         <span id="dobResult" class="text-danger"></span>
-
                     </div>
                     <div class="form-group">
                         <label for="ssn">Social Security Number:</label>
@@ -63,7 +62,8 @@
                     </div>
                     <div class="form-group">
                         <label for="address">Address:</label>
-                        <textarea class="form-control" id="address" name="address" rows="3"></textarea>
+                        <textarea class="form-control" id="address" name="address" rows="3"
+                            spellcheck="false"></textarea>
                         <span id="addressValue" class="text-danger"></span>
                     </div>
                     <div class="form-group">
@@ -71,12 +71,13 @@
                         <input type="tel" class="form-control" id="phone" name="phone">
                         <span id="phoneNumber" class="text-danger"></span>
                     </div>
-
                     <div class="form-group">
                         <label for="email">Email:</label>
                         <input type="email" class="form-control" id="email" name="email">
                         <span id="emailValue" class="text-danger"></span>
                     </div>
+                </div>
+                <div class="col-md-6" id="columnTwo">
                     <div class="form-group">
                         <label>Preferred Method of Communication:</label>
                         <div class="communication">
@@ -84,23 +85,22 @@
                                 <input class="form-check-input" type="checkbox" id="emailCheckbox" name="communication"
                                     value="email">
                                 <label class="form-check-label" for="emailCheckbox">Email</label>
-                            </div>
+                            </div> &nbsp &nbsp &nbsp
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="postCheckbox" name="communication"
                                     value="post">
                                 <label class="form-check-label" for="postCheckbox">Post</label>
-                            </div>
+                            </div> &nbsp &nbsp &nbsp
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="phoneCheckbox" name="communication"
                                     value="phone">
                                 <label class="form-check-label" for="phoneCheckbox">Phone</label>
-                            </div>
+                            </div> &nbsp &nbsp &nbsp
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="faxCheckbox" name="communication"
                                     value="fax">
                                 <label class="form-check-label" for="faxCheckbox">Fax</label>
                             </div>
-
                         </div>
                         <span id="communicationValue" class="text-danger"></span>
                     </div>
@@ -117,7 +117,7 @@
                     <div class="form-group">
                         <label for="department">Department:</label>
                         <select class="form-control" id="department" name="department">
-                            <option value=""></option>
+                            <option disabled selected value="0"> Choose an option</option>
                             <option value="sales">Sales</option>
                             <option value="marketings">Marketing</option>
                             <option value="hr">Human Resources</option>
@@ -144,39 +144,41 @@
                         <textarea class="form-control" id="notes" name="notes" rows="4"></textarea>
                         <span id="addNotesValue" class="text-danger"></span>
                     </div>
-                    <div class="form-group" id="buttonStyle">
-                        <button type="button" class="btn btn-danger" id="cancelButton">Clear</button>
-                        <button type="submit" class="btn btn-primary" id="submitButton">Submit</button>
-                    </div>
+                </div>
+                <div class="form-group" id="buttonStyle">
+                    <button type="button" class="btn btn-danger" id="cancelButton">Clear</button>
+                    <button type="submit" class="btn btn-primary" id="submitButton">Submit</button>
                 </div>
             </div>
         </form>
         <!-- Include Bootstrap JS -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     </div>
-
-    <table class="table table-bordered mt-5">
-        <thead>
-            <tr class="bg-primary">
-                <th>Full Name</th>
-                <th>Gender</th>
-                <th>Date of Birth</th>
-                <th>Social Security Number</th>
-                <th>Address</th>
-                <th>Phone Number</th>
-                <th>Email</th>
-                <th>Preferred Communication</th>
-                <th>Employee ID</th>
-                <th>Job Title</th>
-                <th>Department</th>
-                <th>Salary</th>
-                <th>Hobbies</th>
-                <th>Additional Notes</th>
-            </tr>
-        </thead>
-        <tbody id="dataTableBody">
-            <!-- Data will be displayed here dynamically -->
-        </tbody>
-    </table>
+    <div id="employeeTableContainer">
+        <table class="table table-bordered mt-5">
+            <thead>
+                <tr class="bg-primary">
+                    <th>Full Name</th>
+                    <th>Gender</th>
+                    <th>Date of Birth</th>
+                    <th>Social Security Number</th>
+                    <th>Address</th>
+                    <th>Phone Number</th>
+                    <th>Email</th>
+                    <th>Preferred Communication</th>
+                    <th>Employee ID</th>
+                    <th>Job Title</th>
+                    <th>Department</th>
+                    <th>Salary</th>
+                    <th>Hobbies</th>
+                    <th>Additional Notes</th>
+                </tr>
+            </thead>
+            <tbody id="dataTableBody">
+                <!-- Data will be displayed here dynamically -->
+            </tbody>
+        </table>
+    </div>
 </body>
+
 </html>
