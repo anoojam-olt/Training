@@ -1,6 +1,10 @@
-#Form Validation 
+#Form Validation and displaying the  data on a table
 
-This is a responsive web form using BootStrap 4 and the validation of the form is done using the JavaScript. This form has 14 input fields. Different validation conditions are there in each of input field. The form will be submitted if all validations conditions are passed. And the inputted data are shown on table below the form.The different validaton conditions for each of input fields are:-
+*This is a responsive web form using BootStrap 4 and the validation of the form is done using the JavaScript. 
+*This form has 14 input fields. Different validation conditions are there in each of input field. 
+*The form will be submitted if all validations conditions are passed. 
+*And the inputted data are shown on table below the form.
+*The different validaton conditions for each of input fields are:-
 
 Full Name :- Text Field, Mandatory, Maximum Length - 20, Minimum Length - 3, Should accept alphabets and spaces only.
 
