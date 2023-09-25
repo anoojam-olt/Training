@@ -69,3 +69,7 @@
 .table{
     width: 100%;
 }
+
+.row{
+    margin-left: 0;
+}

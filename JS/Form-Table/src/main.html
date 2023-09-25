@@ -32,7 +32,7 @@
                         <label for="fullname" name="fname">Full Name:</label>
                         <input type="text" class="form-control" id="fullname" name="fullname">
                         <div class="namefield">
-                            <span id="firstName" class="text-danger"></span>
+                            <span id="nameError" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="form-group">
@@ -58,23 +58,23 @@
                     <div class="form-group">
                         <label for="ssn">Social Security Number:</label>
                         <input type="text" class="form-control" id="ssn" name="ssn">
-                        <span id="sscValue" class="text-danger"></span>
+                        <span id="ssnError" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label for="address">Address:</label>
                         <textarea class="form-control" id="address" name="address" rows="3"
                             spellcheck="false"></textarea>
-                        <span id="addressValue" class="text-danger"></span>
+                        <span id="addressError" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label for="phone">Phone Number:</label>
                         <input type="tel" class="form-control" id="phone" name="phone">
-                        <span id="phoneNumber" class="text-danger"></span>
+                        <span id="phoneError" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label for="email">Email:</label>
                         <input type="email" class="form-control" id="email" name="email">
-                        <span id="emailValue" class="text-danger"></span>
+                        <span id="emailError" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="col-md-6" id="columnTwo">
@@ -102,12 +102,12 @@
                                 <label class="form-check-label" for="faxCheckbox">Fax</label>
                             </div>
                         </div>
-                        <span id="communicationValue" class="text-danger"></span>
+                        <span id="communicationError" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label for="employeeId">Employee ID:</label>
                         <input type="text" class="form-control" id="employeeId" name="employeeId" readonly>
-                        <span id="employeeIdValue" class="text-danger"></span>
+                        <span id="employeeIdError" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label for="jobTitle">Job Title:</label>
@@ -127,22 +127,22 @@
                             <option value="support">Customer Support</option>
                             <option value="design">Design</option>
                         </select>
-                        <span id="departmentValue" class="text-danger"></span>
+                        <span id="departmentError" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label for="salary">Salary:</label>
                         <input type="text" class="form-control" id="salary" name="salary">
-                        <span id="salaryValue" class="text-danger"></span>
+                        <span id="salaryError" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label for="hobbies">Hobbies:</label>
                         <input type="text" class="form-control" id="hobbies" name="hobbies">
-                        <span id="hobbiesValue" class="text-danger"></span>
+                        <span id="hobbiesError" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label for="notes">Additional Notes:</label>
                         <textarea class="form-control" id="notes" name="notes" rows="4"></textarea>
-                        <span id="addNotesValue" class="text-danger"></span>
+                        <span id="notesError" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="form-group" id="buttonStyle">
