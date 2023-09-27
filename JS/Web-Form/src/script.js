@@ -65,9 +65,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 } else {
                     clearError(errorElementId);
                 }
-               } 
-            }
-         }
+            } 
+        }
+    }
 
       function isValidDateFormat(date) {
           const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
