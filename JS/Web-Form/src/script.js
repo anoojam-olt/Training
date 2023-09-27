@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const employeeIdInput = form.elements.employeeId;
   employeeIdInput.value = generateRandomEmployeeId();
 
+  //To generate the random number
   function generateRandomEmployeeId() {
       return Math.floor(Math.random() * 9) + 1;
   }
@@ -138,7 +139,6 @@ document.addEventListener('DOMContentLoaded', function () {
       }
 
       const notesPattern = /^[A-Za-z0-9\s,.]*$/;
-
       function validateAdditionalNotes(element, regexPattern, errorElementId, errorMessage) {
           const value = element.value.trim();
           if (value !== '' && !regexPattern.test(value)) {
@@ -149,7 +149,7 @@ document.addEventListener('DOMContentLoaded', function () {
           }
       }
          //validation function values
-         
+
       validateAdditionalNotes(form.elements.notes,notesPattern, 'addNotesError','Should accept alphanumeric characters with spaces, commas and dots only');
       validateText(form.elements.fullname, 3, 20, /^[A-Za-z\s]+$/, 'firstName', 'Max.Length-20, Min.Length-3, Should accept alphabets and spaces only.');
       validateRadio('gender', 'genderSelectError', 'Gender is mandatory');
