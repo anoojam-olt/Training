@@ -11,7 +11,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
   clearButton.addEventListener('click', function () {
       form.reset();
-      clearErrorMessages();
   });
 
   form.addEventListener('submit', function (event) {

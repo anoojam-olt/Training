@@ -11,7 +11,7 @@
 
 #mainForm {
     background-color: rgb(5, 14, 56);
-    border: solid 2px;
+    border: 5px solid rgb(25, 79, 92);
     margin-bottom: 30px;
 }
 

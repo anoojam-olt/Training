@@ -2,12 +2,15 @@ document.addEventListener('DOMContentLoaded', function () {
     const form = document.querySelector('#mainForm');
     const formDataArray = [];
     const employeeIdInput = form.querySelector('[name="employeeId"]');
+    const clearButton = document.querySelector('#cancelButton');
     employeeIdInput.value = generateRandomEmployeeId();
 
+    //To generate random number
     function generateRandomEmployeeId() {
         return Math.floor(Math.random() * 9) + 1;
     }
-
+    
+    //Create rows and cells in table
     function addFormDataToTable(formData) {
         const tableBody = document.querySelector('#dataTableBody');
         const newRow = tableBody.insertRow();
@@ -20,16 +23,17 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    // Push data's to an array
     function saveFormData(formData) {
         formDataArray.push(formData);
     }
-
-    const clearButton = document.querySelector('#cancelButton');
+    
+    //clear button
     clearButton.addEventListener('click', function () {
         form.reset();
-        clearErrorMessages();
     });
 
+    //Submit button
     form.addEventListener('submit', function (event) {
         let valid = true;
 
