@@ -22,7 +22,6 @@
 
 <body class="main-container">
     <div class="container mt-5" id="containerBox">
-
         <form id="mainForm" name="myForm" action="response.html">
             <h1 id="heading">Registration Form</h1>
             <div class="row p-5" id="main">
@@ -41,13 +40,13 @@
                             <div class="form-check">
                                 <input class="form-check-input" type="radio" name="gender" id="male" value="male">
                                 <label class="form-check-label" for="male">Male</label>
-                            </div>
+                            </div> &nbsp&nbsp&nbsp
                             <div class="form-check">
                                 <input class="form-check-input" type="radio" name="gender" id="female" value="female">
                                 <label class="form-check-label" for="female">Female</label>
-                            </div>
-                            <span id="genderSelectError" class="text-danger"></span>
+                            </div>                          
                         </div>
+                        <span id="genderSelectError" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label for="dob">Date of Birth:</label>
@@ -62,7 +61,7 @@
                     </div>
                     <div class="form-group">
                         <label for="address">Address:</label>
-                        <textarea class="form-control" id="address" name="address" rows="3"></textarea>
+                        <textarea class="form-control" id="address" name="address" rows="3" spellcheck="false"></textarea>
                         <span id="addressValue" class="text-danger"></span>
                     </div>
                     <div class="form-group">
@@ -75,6 +74,8 @@
                         <input type="email" class="form-control" id="email" name="email">
                         <span id="emailValue" class="text-danger"></span>
                     </div>
+                </div>
+                <div class="col-md-6" id="columnTwo">
                     <div class="form-group">
                         <label>Preferred Method of Communication:</label>
                         <div class="communication">
@@ -82,17 +83,17 @@
                                 <input class="form-check-input" type="checkbox" id="emailCheckbox" name="communication"
                                     value="email">
                                 <label class="form-check-label" for="emailCheckbox">Email</label>
-                            </div>
+                            </div>&nbsp&nbsp&nbsp
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="postCheckbox" name="communication"
                                     value="post">
                                 <label class="form-check-label" for="postCheckbox">Post</label>
-                            </div>
+                            </div>&nbsp&nbsp&nbsp
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="phoneCheckbox" name="communication"
                                     value="phone">
                                 <label class="form-check-label" for="phoneCheckbox">Phone</label>
-                            </div>
+                            </div>&nbsp&nbsp&nbsp
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="faxCheckbox" name="communication"
                                     value="fax">
@@ -138,13 +139,13 @@
                     </div>
                     <div class="form-group">
                         <label for="notes">Additional Notes:</label>
-                        <textarea class="form-control" id="notes" name="notes" rows="4"></textarea>
+                        <textarea class="form-control" id="notes" name="notes" rows="4" spellcheck="false"></textarea>
                         <span id="addNotesValue" class="text-danger"></span>
-                    </div>
-                    <div class="form-group" id="buttonStyle">
-                        <button type="button" class="btn btn-danger" id="cancelButton">Clear</button>
-                        <button type="submit" class="btn btn-primary" id="submitButton">Submit</button>
-                    </div>
+                    </div>      
+                </div>
+                <div class="form-group" id="buttonStyle">
+                    <button type="button" class="btn btn-danger" id="cancelButton">Clear</button>
+                    <button type="submit" class="btn btn-primary" id="submitButton">Submit</button>
                 </div>
             </div>
         </form>

@@ -149,12 +149,7 @@ document.addEventListener('DOMContentLoaded', function () {
           }
       }
 
-      validateAdditionalNotes(
-          form.elements.notes,
-          notesPattern,
-          'addNotesValue',
-          'Should accept alphanumeric characters with spaces, commas and dots only'
-      );
+      validateAdditionalNotes(form.elements.notes,notesPattern, 'addNotesValue','Should accept alphanumeric characters with spaces, commas and dots only');
       validateText(form.elements.fullname, 3, 20, /^[A-Za-z\s]+$/, 'firstName', 'Max.Length-20, Min.Length-3, Should accept alphabets and spaces only.');
       validateRadio('gender', 'genderSelectError', 'Gender is mandatory');
       validateDob(form.elements.dob, 'dobValue', 'Age should be between 18 and 100, Date Format: yyyy-mm-dd'); // Validate DOB field
@@ -164,13 +159,14 @@ document.addEventListener('DOMContentLoaded', function () {
       validateText(form.elements.email, 1, 50, /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, 'emailValue', 'Max.Length-50, Should accept gmail.com and yahoo.com only');
       validateCheckbox('communication', 'communicationValue', 'Select at least one communication method');
       form.elements.employeeId.value = Math.floor(Math.random() * 10) + 1;
-      validateText(form.elements.jobTitle, 3, 50, /^[A-Za-z\s]+$/, 'jobTitleSpan', 'Max.Length-50, Min.Length-3, Should accept alphabets and spaces only');
+      validateText(form.elements.jobTitle, 3, 50, /^[A-Za-z\s]+$/, 'jobTitleSpan', 'Max.Length-50, Min.Length-3, Accept alphabets and spaces only');
       validateSelect(form.elements.department, 'departmentValue', 'Select a department');
-      validateNumber(form.elements.salary, 3, 10, 'salaryValue', 'Max.Length-10, Min.Length-3');
-      validateText(form.elements.hobbies, 3, 25, /^[A-Za-z,\s-]+$/, 'hobbiesValue', 'Max.Length-25, Min.Length-3, Should accept alphabets with commas and hyphens only');
+      validateNumber(form.elements.salary, 3, 10, 'salaryValue', 'Max.Length-10, Min.Length-3, Should accept numbers only');
+      validateText(form.elements.hobbies, 3, 25, /^[A-Za-z,\s-]+$/, 'hobbiesValue', 'Max.Length-25, Min.Length-3, Accept alphabets with commas and hyphens only');
 
       if (!valid) {
-          event.preventDefault();
+        form.scrollIntoView({ behavior:'smooth' });
+        event.preventDefault();
       }
   });
 });

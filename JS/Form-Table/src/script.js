@@ -164,13 +164,6 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
 
-        validateAdditionalNotes(
-            form.elements.notes,
-            /^[A-Za-z0-9\s,.]+$/,
-            'notesError',
-            'Should accept alphanumeric characters with spaces, commas and dots only'
-        );
-
         validateText(form.elements.fullname, 3, 20, /^[A-Za-z\s]+$/, 'nameError', 'Max.Length - 20, Min.Length - 3, Should accept alphabets and spaces only.');
         validateRadio('gender', 'genderSelectError', 'Gender is mandatory');
         validateDob(form.elements.dob, 'dobValue', 'Age should be between 18 and 100,Date Format: yyyy-mm-dd'); // Validate DOB field
@@ -184,7 +177,7 @@ document.addEventListener('DOMContentLoaded', function () {
         validateSelect(form.elements.department, 'departmentError', 'Select a department');
         validateNumber(form.elements.salary, 3, 10, 'salaryError', 'Max.Length-10, Min.Length-3, Should accept only numbers');
         validateText(form.elements.hobbies, 3, 25, /^[A-Za-z,\s-]+$/, 'hobbiesError', 'Max.Length-25, Min.Length-3, Should accept alphabets with commas and hyphens only');
-
+        validateAdditionalNotes(form.elements.notes, /^[A-Za-z0-9\s,.]+$/,'notesError','Should accept alphanumeric characters with spaces, commas and dots only');
         if (valid) {
             const formData = {
                 'Full Name': form.querySelector('[name="fullname"]').value.trim(),
