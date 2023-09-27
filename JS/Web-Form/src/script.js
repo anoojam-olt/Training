@@ -148,21 +148,22 @@ document.addEventListener('DOMContentLoaded', function () {
               clearError(errorElementId);
           }
       }
-
-      validateAdditionalNotes(form.elements.notes,notesPattern, 'addNotesValue','Should accept alphanumeric characters with spaces, commas and dots only');
+         //validation function values
+         
+      validateAdditionalNotes(form.elements.notes,notesPattern, 'addNotesError','Should accept alphanumeric characters with spaces, commas and dots only');
       validateText(form.elements.fullname, 3, 20, /^[A-Za-z\s]+$/, 'firstName', 'Max.Length-20, Min.Length-3, Should accept alphabets and spaces only.');
       validateRadio('gender', 'genderSelectError', 'Gender is mandatory');
-      validateDob(form.elements.dob, 'dobValue', 'Age should be between 18 and 100, Date Format: yyyy-mm-dd'); // Validate DOB field
-      validateText(form.elements.ssn, 7, 9, /^[0-9-]+$/, 'sscValue', 'Max.Length-9, Min.Length-7, Should accept numbers and hyphens only.');
-      validateText(form.elements.address, 1, 100, /^[A-Za-z0-9\s,.-]+$/, 'addressValue', 'Should accept alphanumeric, spaces, commas and hyphens only');
-      validateText(form.elements.phone, 7, 10, /^[0-9]+$/, 'phoneNumber', 'Max.Length-10, Min.Length-7, Should accept numbers only.');
-      validateText(form.elements.email, 1, 50, /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, 'emailValue', 'Max.Length-50, Should accept gmail.com and yahoo.com only');
-      validateCheckbox('communication', 'communicationValue', 'Select at least one communication method');
+      validateDob(form.elements.dob, 'dobError', 'Age should be between 18 and 100, Date Format: yyyy-mm-dd'); 
+      validateText(form.elements.ssn, 7, 9, /^[0-9-]+$/, 'ssnError', 'Max.Length-9, Min.Length-7, Should accept numbers and hyphens only.');
+      validateText(form.elements.address, 1, 100, /^[A-Za-z0-9\s,.-]+$/, 'addressError', 'Should accept alphanumeric, spaces, commas and hyphens only');
+      validateText(form.elements.phone, 7, 10, /^[0-9]+$/, 'phoneError', 'Max.Length-10, Min.Length-7, Should accept numbers only.');
+      validateText(form.elements.email, 1, 50, /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, 'emailError', 'Max.Length-50, Should accept gmail.com and yahoo.com only');
+      validateCheckbox('communication', 'communicationError', 'Select at least one communication method');
       form.elements.employeeId.value = Math.floor(Math.random() * 10) + 1;
-      validateText(form.elements.jobTitle, 3, 50, /^[A-Za-z\s]+$/, 'jobTitleSpan', 'Max.Length-50, Min.Length-3, Accept alphabets and spaces only');
-      validateSelect(form.elements.department, 'departmentValue', 'Select a department');
-      validateNumber(form.elements.salary, 3, 10, 'salaryValue', 'Max.Length-10, Min.Length-3, Should accept numbers only');
-      validateText(form.elements.hobbies, 3, 25, /^[A-Za-z,\s-]+$/, 'hobbiesValue', 'Max.Length-25, Min.Length-3, Accept alphabets with commas and hyphens only');
+      validateText(form.elements.jobTitle, 3, 50, /^[A-Za-z\s]+$/, 'jobError', 'Max.Length-50, Min.Length-3, Accept alphabets and spaces only');
+      validateSelect(form.elements.department, 'departmentValueError', 'Select a department');
+      validateNumber(form.elements.salary, 3, 10, 'salaryError', 'Max.Length-10, Min.Length-3, Should accept numbers only');
+      validateText(form.elements.hobbies, 3, 25, /^[A-Za-z,\s-]+$/, 'hobbiesError', 'Max.Length-25, Min.Length-3, Accept alphabets with commas and hyphens only');
 
       if (!valid) {
         form.scrollIntoView({ behavior:'smooth' });
