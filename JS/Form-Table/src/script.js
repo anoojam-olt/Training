@@ -4,10 +4,12 @@ document.addEventListener('DOMContentLoaded', function () {
     const employeeIdInput = form.querySelector('[name="employeeId"]');
     const clearButton = document.querySelector('#cancelButton');
     employeeIdInput.value = generateRandomEmployeeId();
-
-    //To generate random number
+    
+    //To generate the random number
     function generateRandomEmployeeId() {
-        return Math.floor(Math.random() * 9) + 1;
+    const randomFloat = Math.random() * 10; // Generate a random number between 0 and 10
+    const randomInteger = Math.floor(randomFloat); // Round it down to the nearest integer
+    return randomInteger +1;  
     }
     
     //Create rows and cells in table
@@ -27,14 +29,29 @@ document.addEventListener('DOMContentLoaded', function () {
     function saveFormData(formData) {
         formDataArray.push(formData);
     }
+
+    function clearAllErrorMessages() {
+        const errorElements = form.querySelectorAll('.text-danger');
+        errorElements.forEach(element => {
+          element.textContent = '';
+        });
+      }
     
     //clear button
     clearButton.addEventListener('click', function () {
         form.reset();
+        clearAllErrorMessages();
+        clearSuccessMessage();
     });
 
+    function clearSuccessMessage() {
+        const successMessageElement = document.querySelector('#successMessage');
+        successMessageElement.textContent = '';
+    }
+    
     //Submit button
     form.addEventListener('submit', function (event) {
+        clearSuccessMessage();
         let valid = true;
 
         function showError(elementId, errorMessage) {
@@ -64,7 +81,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 valid = false;
             } else {
                 const [year, month, day] = dob.split('-').map(Number);
-                if (month < 1 || month > 12 || day < 1 || day > getDaysInMonth(year, month)) {
+                if (month < 1 || month > 12 || day < 1 || day > 31) {
                     showError(errorElementId, 'Invalid date of birth (mm and dd must be valid)');
                     valid = false;
                 } else {
@@ -77,10 +94,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     }
                 }
             }
-        }
-
-        function getDaysInMonth(year, month) {
-            return new Date(year, month, 0).getDate();
         }
 
         function isValidDateFormat(date) {
@@ -167,37 +180,37 @@ document.addEventListener('DOMContentLoaded', function () {
                 clearError(errorElementId);
             }
         }
-
-        validateText(form.elements.fullname, 3, 20, /^[A-Za-z\s]+$/, 'nameError', 'Max.Length - 20, Min.Length - 3, Should accept alphabets and spaces only.');
+        //Validation function values
+        validateText(form.elements.fullname, 3, 20, /^[A-Za-z\s]+$/, 'nameError', 'Max.Length - 20, Min.Length - 3, Only alphabets and spaces are allowed.');
         validateRadio('gender', 'genderSelectError', 'Gender is mandatory');
-        validateDob(form.elements.dob, 'dobValue', 'Age should be between 18 and 100,Date Format: yyyy-mm-dd'); // Validate DOB field
-        validateText(form.elements.ssn, 7, 9, /^[0-9-]+$/, 'ssnError', 'Max.Length-9, Min.Length-7, Should accept numbers and hyphens only.');
-        validateText(form.elements.address, 1, 100, /^[A-Za-z0-9\s,.-]+$/, 'addressError', 'Should accept alphanumeric, spaces, commas and hyphens only');
-        validateText(form.elements.phone, 7, 10, /^[0-9]+$/, 'phoneError', 'Max.Length-10, Min.Length-7, Should accept numbers only.');
-        validateText(form.elements.email, 1, 50, /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, 'emailError', 'Max.Length-50, Should accept gmail.com and yahoo.com only');
+        validateDob(form.elements.dob, 'dobValue', 'Age should be between 18 and 100,Date Format: yyyy-mm-dd'); 
+        validateText(form.elements.ssn, 7, 9, /^[0-9-]+$/, 'ssnError', 'Max.Length-9, Min.Length-7,Numbers and hyphens are only allowed.');
+        validateText(form.elements.address, 1, 100, /^[A-Za-z0-9\s,.-]+$/, 'addressError','Alphanumeric, spaces, commas and hyphens are only allowed');
+        validateText(form.elements.phone, 7, 10, /^[0-9]+$/, 'phoneError', 'Max.Length-10, Min.Length-7, Only numbers are allowed.');
+        validateText(form.elements.email, 1, 50, /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, 'emailError', 'Max.Length-50, gmail.com and yahoo.com are only allowed');
         validateCheckbox('communication', 'communicationError', 'Select at least one communication method');
-        form.elements.employeeId.value = Math.floor(Math.random() * 10) + 1;
-        validateText(form.elements.jobTitle, 3, 50, /^[A-Za-z\s]+$/, 'jobTitleSpan', 'Max.Length-50, Min.Length-3, Should accept alphabets and spaces only');
+        validateText(form.elements.jobTitle, 3, 50, /^[A-Za-z\s]+$/, 'jobTitleSpan', 'Max.Length-50, Min.Length-3, Only alphabets and spaces are allowed');
         validateSelect(form.elements.department, 'departmentError', 'Select a department');
-        validateNumber(form.elements.salary, 3, 10, 'salaryError', 'Max.Length-10, Min.Length-3, Should accept only numbers');
-        validateText(form.elements.hobbies, 3, 25, /^[A-Za-z,\s-]+$/, 'hobbiesError', 'Max.Length-25, Min.Length-3, Should accept alphabets with commas and hyphens only');
-        validateAdditionalNotes(form.elements.notes, /^[A-Za-z0-9\s,.]+$/,'notesError','Should accept alphanumeric characters with spaces, commas and dots only');
+        validateNumber(form.elements.salary, 3, 10, 'salaryError', 'Max.Length-10, Min.Length-3, Only numbers are allowed');
+        validateText(form.elements.hobbies, 3, 25, /^[A-Za-z,\s-]+$/, 'hobbiesError', ' Max.Length-25, Min.Length-3 , Alphabets , commas and hyphens are  only allowed');
+        validateAdditionalNotes(form.elements.notes, /^[A-Za-z0-9\s,.]+$/,'notesError','Alphanumeric characters with spaces, commas and dots are only allowed');
+        
         if (valid) {
             const formData = {
-                'Full Name': form.querySelector('[name="fullname"]').value.trim(),
-                Gender: form.querySelector('[name="gender"]:checked').value,
-                'Date of Birth': form.querySelector('[name="dob"]').value.trim(),
-                'Social Security Number': form.querySelector('[name="ssn"]').value.trim(),
-                Address: form.querySelector('[name="address"]').value.trim(),
-                'Phone Number': form.querySelector('[name="phone"]').value.trim(),
-                Email: form.querySelector('[name="email"]').value.trim(),
-                'Preferred Communication': Array.from(form.querySelectorAll('[name="communication"]:checked')).map(cb => cb.value).join(', '),
-                'Employee ID': form.querySelector('[name="employeeId"]').value.trim(),
-                'Job Title': form.querySelector('[name="jobTitle"]').value.trim(),
-                Department: form.querySelector('[name="department"]').value.trim(),
-                Salary: form.querySelector('[name="salary"]').value.trim(),
-                Hobbies: form.querySelector('[name="hobbies"]').value.trim(),
-                AdditionalNotes: form.querySelector('[name="notes"]').value.trim(),
+                'fullName': form.querySelector('[name="fullname"]').value.trim(),
+                'Gender': form.querySelector('[name="gender"]:checked').value,
+                'dateOfBirth': form.querySelector('[name="dob"]').value.trim(),
+                'socialSecurityNumber': form.querySelector('[name="ssn"]').value.trim(),
+                'Address': form.querySelector('[name="address"]').value.trim(),
+                'phoneNumber': form.querySelector('[name="phone"]').value.trim(),
+                'Email': form.querySelector('[name="email"]').value.trim(),
+                'preferredCommunication': Array.from(form.querySelectorAll('[name="communication"]:checked')).map(cb => cb.value).join(', '),
+                'employeeID': form.querySelector('[name="employeeId"]').value.trim(),
+                'jobTitle': form.querySelector('[name="jobTitle"]').value.trim(),
+                'Department': form.querySelector('[name="department"]').value.trim(),
+                'Salary': form.querySelector('[name="salary"]').value.trim(),
+                'Hobbies': form.querySelector('[name="hobbies"]').value.trim(),
+                'AdditionalNotes': form.querySelector('[name="notes"]').value.trim(),
             };
 
             saveFormData(formData);
@@ -206,11 +219,13 @@ document.addEventListener('DOMContentLoaded', function () {
             const employeeTableContainer = document.getElementById('employeeTableContainer');
             employeeTableContainer.style.display = 'block';
             event.preventDefault();
+            const successMessageElement = document.querySelector('#successMessage');
+            successMessageElement.textContent = 'All informations entered successfully!';
         }
 
         if (!valid) {
-            event.preventDefault();
-            form.scrollIntoView({ behavior:'smooth' });
+            const firstError = form.querySelector('.text-danger');
+            firstError.scrollIntoView({ behavior: 'smooth' });
             event.preventDefault();
         }
     });

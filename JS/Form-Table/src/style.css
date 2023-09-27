@@ -40,6 +40,12 @@
     height: 77px;
 }
 
+#successMessage{
+    text-align: center;
+    margin-bottom: 50px;
+    font-size: large;
+}
+
 .main-container {
     margin: auto;
     color: #f0f8ff;

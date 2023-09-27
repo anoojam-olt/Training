@@ -1,21 +1,32 @@
 document.addEventListener('DOMContentLoaded', function () {
   const form = document.querySelector('#mainForm');
   const clearButton = document.querySelector('#cancelButton');
-  const employeeIdInput = form.elements.employeeId;
+  const employeeIdInput = form.querySelector('#employeeId')
   employeeIdInput.value = generateRandomEmployeeId();
 
   //To generate the random number
   function generateRandomEmployeeId() {
-      return Math.floor(Math.random() * 9) + 1;
+  const randomFloat = Math.random() * 10; // Generate a random floating-point number between 0 and 10
+  const randomInteger = Math.floor(randomFloat); // Round it down to the nearest integer
+  return randomInteger +1;  
+  }
+
+  //To clear all error messages on span
+  function clearAllErrorMessages() {
+   const errorElements = form.querySelectorAll('.text-danger');
+   errorElements.forEach(element => {
+   element.textContent = '';
+    });
   }
 
   clearButton.addEventListener('click', function () {
       form.reset();
+      clearAllErrorMessages();
   });
 
   form.addEventListener('submit', function (event) {
       let valid = true;
-
+   
       function showError(elementId, errorMessage) {
           const errorElement = form.querySelector(`#${elementId}`);
           errorElement.textContent = errorMessage;
@@ -37,20 +48,26 @@ document.addEventListener('DOMContentLoaded', function () {
       }
 
       function validateDob(element, errorElementId) {
-          const dob = element.value.trim();
-          if (dob === '' || !isValidDateFormat(dob)) {
-              showError(errorElementId, 'Invalid date of birth (yyyy-mm-dd)');
-              valid = false;
-          } else {
-              const age = calculateAge(dob);
-              if (age < 18 || age > 100) {
-                  showError(errorElementId, 'Age must be between 18 and 100');
-                  valid = false;
-              } else {
-                  clearError(errorElementId);
-              }
-          }
-      }
+        const dob = element.value.trim();
+        if (dob === '' || !isValidDateFormat(dob)) {
+            showError(errorElementId, 'Invalid date of birth (yyyy-mm-dd)');
+            valid = false;
+        } else {
+            const [year, month, day] = dob.split('-').map(Number);
+            if (month < 1 || month > 12 || day < 1 || day > 31) {
+                showError(errorElementId, 'Invalid date of birth (mm and dd must be valid)');
+                valid = false;
+            } else {
+                const age = calculateAge(dob);
+                if (age < 18 || age > 100) {
+                    showError(errorElementId, 'Age must be between 18 and 100');
+                    valid = false;
+                } else {
+                    clearError(errorElementId);
+                }
+               } 
+            }
+         }
 
       function isValidDateFormat(date) {
           const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
@@ -65,11 +82,6 @@ document.addEventListener('DOMContentLoaded', function () {
               return age - 1;
           }
           return age;
-      }
-
-      function showError(elementId, errorMessage) {
-          const errorElement = document.getElementById(elementId);
-          errorElement.textContent = errorMessage;
       }
 
       function clearError(elementId) {
@@ -127,16 +139,6 @@ document.addEventListener('DOMContentLoaded', function () {
           }
       }
 
-      function validateAdditionalNotes(element, minLength, maxLength, regexPattern, errorElementId, errorMessage) {
-          const value = element.value.trim();
-          if (value !== '' && (value.length < minLength || value.length > maxLength || !regexPattern.test(value))) {
-              showError(errorElementId, errorMessage);
-              valid = false;
-          } else {
-              clearError(errorElementId);
-          }
-      }
-
       const notesPattern = /^[A-Za-z0-9\s,.]*$/;
       function validateAdditionalNotes(element, regexPattern, errorElementId, errorMessage) {
           const value = element.value.trim();
@@ -149,23 +151,23 @@ document.addEventListener('DOMContentLoaded', function () {
       }
          //validation function values
 
-      validateAdditionalNotes(form.elements.notes,notesPattern, 'addNotesError','Should accept alphanumeric characters with spaces, commas and dots only');
-      validateText(form.elements.fullname, 3, 20, /^[A-Za-z\s]+$/, 'firstName', 'Max.Length-20, Min.Length-3, Should accept alphabets and spaces only.');
+      validateAdditionalNotes(form.elements.notes,notesPattern, 'addNotesError','Alphanumeric characters with spaces, commas and dots are only allowed');
+      validateText(form.elements.fullname, 3, 20, /^[A-Za-z\s]+$/, 'firstName', 'Max.Length-20, Min.Length-3, Only alphabets and spaces are allowed.');
       validateRadio('gender', 'genderSelectError', 'Gender is mandatory');
       validateDob(form.elements.dob, 'dobError', 'Age should be between 18 and 100, Date Format: yyyy-mm-dd'); 
-      validateText(form.elements.ssn, 7, 9, /^[0-9-]+$/, 'ssnError', 'Max.Length-9, Min.Length-7, Should accept numbers and hyphens only.');
-      validateText(form.elements.address, 1, 100, /^[A-Za-z0-9\s,.-]+$/, 'addressError', 'Should accept alphanumeric, spaces, commas and hyphens only');
-      validateText(form.elements.phone, 7, 10, /^[0-9]+$/, 'phoneError', 'Max.Length-10, Min.Length-7, Should accept numbers only.');
-      validateText(form.elements.email, 1, 50, /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, 'emailError', 'Max.Length-50, Should accept gmail.com and yahoo.com only');
-      validateCheckbox('communication', 'communicationError', 'Select at least one communication method');
-      form.elements.employeeId.value = Math.floor(Math.random() * 10) + 1;
-      validateText(form.elements.jobTitle, 3, 50, /^[A-Za-z\s]+$/, 'jobError', 'Max.Length-50, Min.Length-3, Accept alphabets and spaces only');
+      validateText(form.elements.ssn, 7, 9, /^[0-9-]+$/, 'ssnError', 'Max.Length-9, Min.Length-7, Numbers and hyphens are only allowed.');
+      validateText(form.elements.address, 1, 100, /^[A-Za-z0-9\s,.-]+$/, 'addressError', 'Alphanumeric, spaces, commas and hyphens are only allowed');
+      validateText(form.elements.phone, 7, 10, /^[0-9]+$/, 'phoneError', 'Max.Length-10, Min.Length-7, Only numbers are allowed.');
+      validateText(form.elements.email, 1, 50, /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, 'emailError', 'Max.Length-50,  gmail.com and yahoo.com are only allowed');
+      validateCheckbox('communication', 'communicationError', 'Select at least one communication method'); 
+      validateText(form.elements.jobTitle, 3, 50, /^[A-Za-z\s]+$/, 'jobError', 'Max.Length-50, Min.Length-3, Only alphabets and spaces are allowed');
       validateSelect(form.elements.department, 'departmentValueError', 'Select a department');
-      validateNumber(form.elements.salary, 3, 10, 'salaryError', 'Max.Length-10, Min.Length-3, Should accept numbers only');
-      validateText(form.elements.hobbies, 3, 25, /^[A-Za-z,\s-]+$/, 'hobbiesError', 'Max.Length-25, Min.Length-3, Accept alphabets with commas and hyphens only');
+      validateNumber(form.elements.salary, 3, 10, 'salaryError', 'Max.Length-10, Min.Length-3, Only numbers are allowed');
+      validateText(form.elements.hobbies, 3, 25, /^[A-Za-z,\s-]+$/, 'hobbiesError', 'Max.Length-25, Min.Length-3, Alphabets , commas and hyphens are  only allowed');
 
       if (!valid) {
-        form.scrollIntoView({ behavior:'smooth' });
+        const firstError = form.querySelector('.text-danger');
+        firstError.scrollIntoView({ behavior: 'smooth' });
         event.preventDefault();
       }
   });
