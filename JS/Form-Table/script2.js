@@ -5,15 +5,12 @@ document.addEventListener('DOMContentLoaded', function () {
     const clearButton = document.querySelector('#cancelButton');
     employeeIdInput.value = generateRandomEmployeeId();
 
-    //To generate the random number
     function generateRandomEmployeeId() {
-        // Generate a random number between 0 and 10
         const randomFloat = Math.random() * 10;
-        const randomInteger = Math.floor(randomFloat); // Round it down to the nearest integer
+        const randomInteger = Math.floor(randomFloat);
         return randomInteger + 1;
     }
 
-    //To show table data of additional notes in rows
     function notesBreak(text, chunkLength) {
         const chunks = [];
         for (let i = 0; i < text.length; i += chunkLength) {
@@ -21,10 +18,8 @@ document.addEventListener('DOMContentLoaded', function () {
             chunks.push(store);
         }
         return chunks;
-
     }
 
-    //Create rows and cells in table
     function addFormDataToTable(formData) {
         const tableBody = document.querySelector('#dataTableBody');
         const newRow = tableBody.insertRow();
@@ -35,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 if (key === 'additionalNotes') {
                     const chunks = notesBreak(formData[key], 20);
-                    cell.innerHTML = chunks.join('<br>'); // created <br> tag
+                    cell.innerHTML = chunks.join('<br>');
                 } else {
                     cell.innerHTML = formData[key];
                 }
@@ -43,7 +38,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // Push data's to an array
     function saveFormData(formData) {
         formDataArray.push(formData);
     }
@@ -55,7 +49,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    //clear button
     clearButton.addEventListener('click', function () {
         form.reset();
         clearAllErrorMessages();
@@ -67,7 +60,6 @@ document.addEventListener('DOMContentLoaded', function () {
         successMessageElement.textContent = '';
     }
 
-    //Submit button
     form.addEventListener('submit', function (event) {
         clearSuccessMessage();
         let valid = true;
@@ -82,7 +74,7 @@ document.addEventListener('DOMContentLoaded', function () {
             errorElement.textContent = '';
         }
 
-        function validateText(element, minLength, maxLength, regexPattern, errorElementId, errorMessage) {
+       function validateText(element, minLength, maxLength, regexPattern, errorElementId, errorMessage) {
             const value = element.value.trim();
             if (value === '' || value.length < minLength || value.length > maxLength || !regexPattern.test(value)) {
                 showError(errorElementId, errorMessage);
@@ -213,9 +205,10 @@ document.addEventListener('DOMContentLoaded', function () {
         validateText(form.elements.hobbies, 3, 25, /^[a-zA-Z]+(?:,[a-zA-Z]+|-?[a-zA-Z]+)*$/, 'hobbiesError', ' Max.Length-25, Min.Length-3 , Alphabets , commas and hyphens are  only allowed');
         validateAdditionalNotes(form.elements.notes, /^[a-zA-Z0-9]+(?:[,.][a-zA-Z0-9]+)*$/, 'notesError', 'Alphanumeric characters with spaces, commas and dots are only allowed');
 
+
         if (valid) {
             const formData = {
-                'fullName': form.querySelector('[name="fullname"]').value.trim(),
+               'fullName': form.querySelector('[name="fullname"]').value.trim(),
                 'ender': form.querySelector('[name="gender"]:checked').value,
                 'dateOfBirth': form.querySelector('[name="dob"]').value.trim(),
                 'socialSecurityNumber': form.querySelector('[name="ssn"]').value.trim(),
@@ -239,9 +232,8 @@ document.addEventListener('DOMContentLoaded', function () {
             employeeTableContainer.style.display = 'block';
             event.preventDefault();
             const successMessageElement = document.querySelector('#successMessage');
-            successMessageElement.textContent = 'All informations are entered successfully!';
+            successMessageElement.textContent = 'All information has been entered successfully!';
             employeeIdInput.value = generateRandomEmployeeId();
-
         }
 
         if (!valid) {
