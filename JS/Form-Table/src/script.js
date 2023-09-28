@@ -238,7 +238,7 @@ document.addEventListener('DOMContentLoaded', function () {
             employeeTableContainer.style.display = 'block';
             event.preventDefault();
             const successMessageElement = document.querySelector('#successMessage');
-            successMessageElement.textContent = 'All informations entered successfully!';
+            successMessageElement.textContent = 'All informations are entered successfully!';
             employeeIdInput.value = generateRandomEmployeeId();
 
         }
