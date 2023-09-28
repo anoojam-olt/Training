@@ -4,14 +4,25 @@ document.addEventListener('DOMContentLoaded', function () {
     const employeeIdInput = form.querySelector('[name="employeeId"]');
     const clearButton = document.querySelector('#cancelButton');
     employeeIdInput.value = generateRandomEmployeeId();
-    
+
     //To generate the random number
     function generateRandomEmployeeId() {
-    const randomFloat = Math.random() * 10; // Generate a random number between 0 and 10
-    const randomInteger = Math.floor(randomFloat); // Round it down to the nearest integer
-    return randomInteger +1;  
+        const randomFloat = Math.random() * 10; // Generate a random number between 0 and 10
+        const randomInteger = Math.floor(randomFloat); // Round it down to the nearest integer
+        return randomInteger + 1;
     }
-    
+
+    //To show table data of additional notes in rows
+    function notesBreak(text, chunkLength) {
+        const chunks = [];
+        for (let i = 0; i < text.length; i += chunkLength) {
+            const store = text.slice(i, i + chunkLength);
+            chunks.push(store);
+        }
+        return chunks;
+
+    }
+
     //Create rows and cells in table
     function addFormDataToTable(formData) {
         const tableBody = document.querySelector('#dataTableBody');
@@ -20,7 +31,13 @@ document.addEventListener('DOMContentLoaded', function () {
         for (const key in formData) {
             if (formData.hasOwnProperty(key)) {
                 const cell = newRow.insertCell();
-                cell.innerHTML = formData[key];
+
+                if (key === 'additionalNotes') {
+                    const chunks = notesBreak(formData[key], 20);
+                    cell.innerHTML = chunks.join('<br>'); // created <br> tag
+                } else {
+                    cell.innerHTML = formData[key];
+                }
             }
         }
     }
@@ -33,10 +50,10 @@ document.addEventListener('DOMContentLoaded', function () {
     function clearAllErrorMessages() {
         const errorElements = form.querySelectorAll('.text-danger');
         errorElements.forEach(element => {
-          element.textContent = '';
+            element.textContent = '';
         });
-      }
-    
+    }
+
     //clear button
     clearButton.addEventListener('click', function () {
         form.reset();
@@ -48,7 +65,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const successMessageElement = document.querySelector('#successMessage');
         successMessageElement.textContent = '';
     }
-    
+
     //Submit button
     form.addEventListener('submit', function (event) {
         clearSuccessMessage();
@@ -183,34 +200,35 @@ document.addEventListener('DOMContentLoaded', function () {
         //Validation function values
         validateText(form.elements.fullname, 3, 20, /^[A-Za-z\s]+$/, 'nameError', 'Max.Length - 20, Min.Length - 3, Only alphabets and spaces are allowed.');
         validateRadio('gender', 'genderSelectError', 'Gender is mandatory');
-        validateDob(form.elements.dob, 'dobValue', 'Age should be between 18 and 100,Date Format: yyyy-mm-dd'); 
-        validateText(form.elements.ssn, 7, 9, /^[0-9-]+$/, 'ssnError', 'Max.Length-9, Min.Length-7,Numbers and hyphens are only allowed.');
-        validateText(form.elements.address, 1, 100, /^[A-Za-z0-9\s,.-]+$/, 'addressError','Alphanumeric, spaces, commas and hyphens are only allowed');
+        validateDob(form.elements.dob, 'dobValue', 'Age should be between 18 and 100,Date Format: yyyy-mm-dd');
+        validateText(form.elements.ssn, 7, 9, /^[0-9]+(-[0-9]+)*$/, 'ssnError', 'Max.Length-9, Min.Length-7,Numbers and hyphens are only allowed.');
+        validateText(form.elements.address, 1, 100, /^[a-zA-Z0-9]+(?:[ ,-][a-zA-Z0-9]+)*$/, 'addressError', 'Alphanumeric, spaces, commas and hyphens are only allowed');
         validateText(form.elements.phone, 7, 10, /^[0-9]+$/, 'phoneError', 'Max.Length-10, Min.Length-7, Only numbers are allowed.');
-        validateText(form.elements.email, 1, 50, /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, 'emailError', 'Max.Length-50, gmail.com and yahoo.com are only allowed');
+        validateText(form.elements.email, 1, 50, /^[a-zA-Z0-9]+(?:\.[a-zA-Z0-9]+)*@(gmail\.com|yahoo\.com)$/, 'emailError', 'Max.Length-50, gmail.com and yahoo.com are only allowed');
         validateCheckbox('communication', 'communicationError', 'Select at least one communication method');
         validateText(form.elements.jobTitle, 3, 50, /^[A-Za-z\s]+$/, 'jobTitleSpan', 'Max.Length-50, Min.Length-3, Only alphabets and spaces are allowed');
         validateSelect(form.elements.department, 'departmentError', 'Select a department');
         validateNumber(form.elements.salary, 3, 10, 'salaryError', 'Max.Length-10, Min.Length-3, Only numbers are allowed');
-        validateText(form.elements.hobbies, 3, 25, /^[A-Za-z,\s-]+$/, 'hobbiesError', ' Max.Length-25, Min.Length-3 , Alphabets , commas and hyphens are  only allowed');
-        validateAdditionalNotes(form.elements.notes, /^[A-Za-z0-9\s,.]+$/,'notesError','Alphanumeric characters with spaces, commas and dots are only allowed');
-        
+        validateText(form.elements.hobbies, 3, 25, /^[a-zA-Z]+(?:,[a-zA-Z]+|-?[a-zA-Z]+)*$/, 'hobbiesError', ' Max.Length-25, Min.Length-3 , Alphabets , commas and hyphens are  only allowed');
+        validateAdditionalNotes(form.elements.notes, /^[a-zA-Z0-9]+(?:[,.][a-zA-Z0-9]+)*$/, 'notesError', 'Alphanumeric characters with spaces, commas and dots are only allowed');
+
         if (valid) {
             const formData = {
                 'fullName': form.querySelector('[name="fullname"]').value.trim(),
-                'Gender': form.querySelector('[name="gender"]:checked').value,
+                'ender': form.querySelector('[name="gender"]:checked').value,
                 'dateOfBirth': form.querySelector('[name="dob"]').value.trim(),
                 'socialSecurityNumber': form.querySelector('[name="ssn"]').value.trim(),
-                'Address': form.querySelector('[name="address"]').value.trim(),
+                'address': form.querySelector('[name="address"]').value.trim(),
                 'phoneNumber': form.querySelector('[name="phone"]').value.trim(),
-                'Email': form.querySelector('[name="email"]').value.trim(),
+                'email': form.querySelector('[name="email"]').value.trim(),
                 'preferredCommunication': Array.from(form.querySelectorAll('[name="communication"]:checked')).map(cb => cb.value).join(', '),
                 'employeeID': form.querySelector('[name="employeeId"]').value.trim(),
                 'jobTitle': form.querySelector('[name="jobTitle"]').value.trim(),
-                'Department': form.querySelector('[name="department"]').value.trim(),
-                'Salary': form.querySelector('[name="salary"]').value.trim(),
-                'Hobbies': form.querySelector('[name="hobbies"]').value.trim(),
-                'AdditionalNotes': form.querySelector('[name="notes"]').value.trim(),
+                'department': form.querySelector('[name="department"]').value.trim(),
+                'salary': form.querySelector('[name="salary"]').value.trim(),
+                'hobbies': form.querySelector('[name="hobbies"]').value.trim(),
+                'additionalNotes': form.querySelector('[name="notes"]').value.trim(),
+                'employeeID': generateRandomEmployeeId(),
             };
 
             saveFormData(formData);
@@ -221,11 +239,15 @@ document.addEventListener('DOMContentLoaded', function () {
             event.preventDefault();
             const successMessageElement = document.querySelector('#successMessage');
             successMessageElement.textContent = 'All informations entered successfully!';
+            employeeIdInput.value = generateRandomEmployeeId();
+
         }
 
         if (!valid) {
             const firstError = form.querySelector('.text-danger');
-            firstError.scrollIntoView({ behavior: 'smooth' });
+            firstError.scrollIntoView({
+                behavior: 'smooth'
+            });
             event.preventDefault();
         }
     });

@@ -22,14 +22,14 @@
 
 <body class="main-container">
     <div class="container mt-5" id="containerBox">
-       <form id="mainForm" name="myForm">
+        <form id="mainForm" name="myForm">
             <h1 id="heading">Registration Form</h1>
             <div class="row p-5" id="main">
                 <div class="col-md-6">
                     <div class="form-group">
                         <span id="requiredError"></span>
                         <label for="fullname" name="fname">Full Name:</label>
-                        <input type="text" class="form-control" id="fullname" name="fullname">
+                        <input type="text" class="form-control" id="fullname" name="fullname" spellcheck="false">
                         <div class="namefield">
                             <span id="nameError" class="text-danger"></span>
                         </div>
@@ -140,7 +140,7 @@
                     </div>
                     <div class="form-group">
                         <label for="notes">Additional Notes:</label>
-                        <textarea class="form-control" id="notes" name="notes" rows="4"></textarea>
+                        <textarea class="form-control" id="notes" name="notes" rows="4" spellcheck="false"></textarea>
                         <span id="notesError" class="text-danger"></span>
                     </div>
                 </div>
@@ -154,7 +154,8 @@
         <!-- Include Bootstrap JS -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     </div>
-    <div id="employeeTableContainer">
+
+    <div class="table-responsive" id="employeeTableContainer">
         <table class="table table-bordered mt-5">
             <thead>
                 <tr class="bg-primary">
@@ -175,10 +176,11 @@
                 </tr>
             </thead>
             <tbody id="dataTableBody">
-                <!-- Data will be displayed here dynamically -->
+                <!-- Data will be displayed here-->
             </tbody>
         </table>
     </div>
+
 </body>
 
 </html>
