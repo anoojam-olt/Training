@@ -174,6 +174,7 @@ function validateAdditionalNotes(element, regexPattern, errorElementId, errorMes
         return true;
     }
 }
+
 // clear button
 clearButton.addEventListener('click', function () {
     form.reset();
