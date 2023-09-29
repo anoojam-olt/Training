@@ -69,6 +69,7 @@ function clearError(elementId) {
     const errorElement = document.getElementById(elementId);
     errorElement.textContent = '';
 }
+
 //validation functions
 function validateText(element, minLength, maxLength, regexPattern, errorElementId, errorMessage) {
     const value = element.value.trim();
