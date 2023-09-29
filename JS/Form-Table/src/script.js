@@ -27,11 +27,6 @@ function addFormDataToTable(formData) {
     }
 }
 
-// Push data to an array
-function saveFormData(formData, formDataArray) {
-    formDataArray.push(formData);
-}
-
 // Generate a random number between 0 to 10
 function generateRandomEmployeeId() {
     const randomFloat = Math.random() * 10;
@@ -93,25 +88,26 @@ function validateRadio(elementName, errorElementId, errorMessage, form) {
 
 function validateDob(element, errorElementId) {
     const dob = element.value.trim();
-    if (dob === '' || !isValidDateFormat(dob)) {
+    const dateParts = dob.split('-').map(Number);
+    const [year, month, day] = dateParts;
+
+    const isValidDate = !isNaN(year) && !isNaN(month) && !isNaN(day) &&
+        month >= 1 && month <= 12 &&
+        day >= 1 && day <= new Date(year, month, 0).getDate();
+
+    if (!isValidDate) {
         showError(errorElementId, 'Invalid date of birth (yyyy-mm-dd)');
         return false;
-    } else {
-        const [year, month, day] = dob.split('-').map(Number);
-        if (month < 1 || month > 12 || day < 1 || day > 31) {
-            showError(errorElementId, 'Invalid date of birth (mm and dd must be valid)');
-            return false;
-        } else {
-            const age = calculateAge(dob);
-            if (age < 18 || age > 100) {
-                showError(errorElementId, 'Age must be between 18 and 100');
-                return false;
-            } else {
-                clearError(errorElementId);
-                return true;
-            }
-        }
     }
+
+    const age = calculateAge(dob);
+    if (age < 18 || age > 100) {
+        showError(errorElementId, 'Age must be between 18 and 100');
+        return false;
+    }
+
+    clearError(errorElementId);
+    return true;
 }
 
 function isValidDateFormat(date) {
@@ -184,22 +180,27 @@ form.addEventListener('submit', function (event) {
     clearSuccessMessage();
     let valid = true;
 
-    // Validation function values
-    valid = validateText(form.elements.fullname, 3, 20, /^[a-zA-Z\s]+$/, 'nameError', 'Max.Length - 20, Min.Length - 3, Only alphabets and spaces are allowed.') && valid;
-    valid = validateRadio('gender', 'genderSelectError', 'Gender is mandatory', form) && valid;
-    valid = validateDob(form.elements.dob, 'dobValue', form) && valid;
-    valid = validateText(form.elements.ssn, 7, 9, /^[0-9]+(-[0-9]+)*$/, 'ssnError', 'Max.Length-9, Min.Length-7, Numbers and hyphens are only allowed.') && valid;
-    valid = validateText(form.elements.address, 1, 100, /^[a-zA-Z0-9]+(?:\s*[ ,-]\s*[a-zA-Z0-9]+)*$/, 'addressError', 'Alphanumeric, spaces, commas and hyphens are only allowed') && valid;
-    valid = validateText(form.elements.phone, 7, 10, /^[0-9]+$/, 'phoneError', 'Max.Length-10, Min.Length-7, Only numbers are allowed.') && valid;
-    valid = validateText(form.elements.email, 1, 50, /^[a-zA-Z0-9]+(?:\.[a-zA-Z0-9]+)*@(gmail\.com|yahoo\.com)$/, 'emailError', 'Max.Length-50, gmail.com and yahoo.com are only allowed') && valid;
-    valid = validateCheckbox('communication', 'communicationError', 'Select at least one communication method') && valid;
-    valid = validateText(form.elements.jobTitle, 3, 50, /^[A-Za-z\s]+$/, 'jobTitleSpan', 'Max.Length-50, Min.Length-3, Only alphabets and spaces are allowed') && valid;
-    valid = validateSelect(form.elements.department, 'departmentError', 'Select a department') && valid;
-    valid = validateNumber(form.elements.salary, 3, 10, 'salaryError', 'Max.Length-10, Min.Length-3, Only numbers are allowed') && valid;
-    valid = validateText(form.elements.hobbies, 3, 25, /^[A-Za-z\s]+(?:,[A-Za-z\s]+|-?[A-Za-z\s]+)*$/, 'hobbiesError', ' Max.Length-25, Min.Length-3 , Alphabets , commas and hyphens are only allowed') && valid;
-    valid = validateAdditionalNotes(form.elements.notes, /^[a-zA-Z0-9\s]+(?:[.,][a-zA-Z0-9\s]+)*[.,]?$/, 'notesError', 'Alphanumeric characters with spaces, commas and dots are only allowed') && valid;
+    const validationFunctions = [
+        { func: validateText, args: [form.elements.fullname, 3, 20, /^[a-zA-Z\s]+$/, 'nameError', 'Max.Length - 20, Min.Length - 3, Only alphabets and spaces are allowed.'] },
+        { func: validateRadio, args: ['gender', 'genderSelectError', 'Gender is mandatory', form] },
+        { func: validateDob, args: [form.elements.dob, 'dobValue'] },
+        { func: validateText, args: [form.elements.ssn, 7, 9, /^[0-9]+(-[0-9]+)*$/, 'ssnError', 'Max.Length-9, Min.Length-7, Numbers and hyphens are only allowed.'] },
+        { func: validateText, args: [form.elements.address, 1, 100, /^[a-zA-Z0-9]+(?:\s*[ ,-]\s*[a-zA-Z0-9]+)*$/, 'addressError', 'Alphanumeric, spaces, commas and hyphens are only allowed'] },
+        { func: validateText, args: [form.elements.phone, 7, 10, /^[0-9]+$/, 'phoneError', 'Max.Length-10, Min.Length-7, Only numbers are allowed.'] },
+        { func: validateText, args: [form.elements.email, 1, 50, /^[a-zA-Z0-9]+(?:\.[a-zA-Z0-9]+)*@(gmail\.com|yahoo\.com)$/, 'emailError', 'Max.Length-50, gmail.com and yahoo.com are only allowed'] },
+        { func: validateCheckbox, args: ['communication', 'communicationError', 'Select at least one communication method'] },
+        { func: validateText, args: [form.elements.jobTitle, 3, 50, /^[A-Za-z\s]+$/, 'jobTitleSpan', 'Max.Length-50, Min.Length-3, Only alphabets and spaces are allowed'] },
+        { func: validateSelect, args: [form.elements.department, 'departmentError', 'Select a department'] },
+        { func: validateNumber, args: [form.elements.salary, 3, 10, 'salaryError', 'Max.Length-10, Min.Length-3, Only numbers are allowed'] },
+        { func: validateText, args: [form.elements.hobbies, 3, 25, /^[A-Za-z\s]+(?:,[A-Za-z\s]+|-?[A-Za-z\s]+)*$/, 'hobbiesError', ' Max.Length-25, Min.Length-3 , Alphabets , commas and hyphens are only allowed'] },
+        { func: validateAdditionalNotes, args: [form.elements.notes, /^[a-zA-Z0-9\s]+(?:[.,][a-zA-Z0-9\s]+)*[.,]?$/, 'notesError', 'Alphanumeric characters with spaces, commas and dots are only allowed'] }
+    ];   
+    
+    validationFunctions.forEach(({ func, args }) => {
+        valid = func(...args) && valid;
+    });
 
-    if (valid) {
+if (valid) {
         const formData = {
             'fullName': form.querySelector('[name="fullname"]').value.trim(),
             'gender': form.querySelector('[name="gender"]:checked').value,
@@ -216,8 +217,7 @@ form.addEventListener('submit', function (event) {
             'hobbies': form.querySelector('[name="hobbies"]').value.trim(),
             'additionalNotes': form.querySelector('[name="notes"]').value.trim(),
         };
-
-        saveFormData(formData, formDataArray);
+        formDataArray.push(formData);
         form.reset();
         addFormDataToTable(formData);
         employeeTableContainer.style.display = 'block';
