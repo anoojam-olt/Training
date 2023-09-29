@@ -7,6 +7,7 @@ const errorElements = form.querySelectorAll('.text-danger');
 const successMessageElement = document.querySelector('#successMessage');
 const employeeTableContainer = document.querySelector('#employeeTableContainer');
 const firstError = form.querySelector('.text-danger');
+
 employeeIdInput.value = generateRandomEmployeeId();
 
 // Create rows and cells in table
@@ -63,6 +64,7 @@ function clearError(elementId) {
     const errorElement = document.getElementById(elementId);
     errorElement.textContent = '';
 }
+
 //validation functions
 function validateText(element, minLength, maxLength, regexPattern, errorElementId, errorMessage) {
     const value = element.value.trim();
@@ -168,6 +170,7 @@ function validateAdditionalNotes(element, regexPattern, errorElementId, errorMes
         return true;
     }
 }
+
 // clear button
 clearButton.addEventListener('click', function () {
     form.reset();
