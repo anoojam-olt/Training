@@ -9,7 +9,6 @@
 
             $('#employeeId').val(generateRandomEmployeeId());
 
-             // Helper function: addFormDataToTable
              function addFormDataToTable(formData) {
                 const newRow = $('<tr></tr>');
 
@@ -272,6 +271,7 @@
                 if (genderRadio.length > 0) {
                     genderRadio.prop('checked', true);
                 }
+                        
                 $('#dob').val(formData.dateOfBirth);
                 $('#ssn').val(formData.socialSecurityNumber);
                 $('#address').val(formData.address);
