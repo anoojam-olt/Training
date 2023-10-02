@@ -1,44 +1,40 @@
-$(document).ready(function () {
-    const calculatorContainer = document.querySelector('.container');
+    const $displayNumber = $('#displayNum');
+    const $displayOperator = $('#displayOpr');
     let inputHistory = '';
     let currentInput = '';
     let hasOperator = false;
     let equal = false;
-    let count = 0;
     let operator = '';
     let expression = '';
+    
+    $('.container').on('click', 'button', function() {
+        const buttonValue = $(this).text();
 
-    calculatorContainer.addEventListener('click', function (event) {
-        const target = event.target;
-        if (target.tagName === 'BUTTON') {
-            const buttonValue = target.textContent;
-
-            switch (buttonValue) {
-                case 'C':
-                    clearDisplay();
-                    break;
-                case '=':
-                    calculate();
-                    break;
-                case '+':
-                case '-':
-                case '*':
-                case '/':
-                    addOperatorToDisplay(buttonValue);
-                    break;
-                case '.':
-                    addDecimalPointToDisplay();
-                    break;
-                default:
-                    addNumberToDisplay(buttonValue);
-                    break;
-            }
+        switch (buttonValue) {
+            case 'C':
+                clearDisplay();
+                break;
+            case '=':
+                calculate();
+                break;
+            case '+':
+            case '-':
+            case '*':
+            case '/':
+                addOperatorToDisplay(buttonValue);
+                break;
+            case '.':
+                addDecimalPointToDisplay();
+                break;
+            default:
+                addNumberToDisplay(buttonValue);
+                break;
         }
     });
 
     function clearDisplay() {
-        document.querySelector('#displayNum').innerHTML = '';
-        document.querySelector('#displayOpr').innerHTML = '';
+        $displayNumber.html('');
+        $displayOperator.html('');
         inputHistory = '';
         currentInput = '';
         hasOperator = false;
@@ -51,7 +47,7 @@ $(document).ready(function () {
     function addNumberToDisplay(value) {
         if (value === '.') {
             if (!currentInput.includes('.')) {
-                if (currentInput.length < 30) {
+                if (currentInput.length < 27) {
                     currentInput += '.';
                     showNumber(currentInput);
                     inputHistory += '.';
@@ -59,9 +55,13 @@ $(document).ready(function () {
             }
         } else {
             if (hasOperator) {
-                currentInput = ''; // Clear currentInput when an operator is clicked
+                currentInput = '';
+            } else if (equal) {
+                inputHistory = '';
+                currentInput = '';
+                equal = false;
             }
-            if (currentInput.length < 30) {
+            if (currentInput.length < 27) {
                 currentInput += value;
                 showNumber(currentInput);
                 inputHistory += value;
@@ -73,7 +73,7 @@ $(document).ready(function () {
     function addOperatorToDisplay(oper) {
         hasOperator = true;
 
-        document.querySelector('#displayOpr').innerHTML = oper;
+        $displayOperator.html(oper);
         if (operator !== oper) {
             operator = oper;
             expression += operator;
@@ -83,32 +83,39 @@ $(document).ready(function () {
     }
 
     function addDecimalPointToDisplay() {
-        if (!currentInput.includes('.')) {
-            currentInput += '.';
-            showNumber(currentInput);
-            inputHistory += '.';
+        if (!currentInput.includes('.') && (!equal || (equal && hasOperator))) {
+            if (!hasOperator) {
+                currentInput += '.';
+                showNumber(currentInput);
+                inputHistory += '.';
+            } else {
+                currentInput = operator;
+                showNumber(currentInput);
+                inputHistory += operator + '.';
+                hasOperator = false;
+            }
         }
     }
 
     function showNumber(numbers) {
         clearIfEqual();
-        document.querySelector('#displayNum').innerHTML = numbers;
+        $displayNumber.html(numbers);
         if (hasOperator) {
             showSecondNumber();
         }
     }
 
     function showSecondNumber() {
-        document.querySelector('#displayNum').innerHTML = currentInput;
-        document.querySelector('#displayOpr').innerHTML = '';
+        $displayNumber.html(currentInput);
+        $displayOperator.html('');
         hasOperator = false;
     }
 
     function calculate() {
         if (inputHistory && !equal) {
             const calculationOutput = math.evaluate(inputHistory);
-            document.querySelector('#displayOpr').innerHTML = '=';
-            document.querySelector('#displayNum').innerHTML = Number(calculationOutput.toFixed(12));
+            $displayOperator.html('=');
+            $displayNumber.html(Number(calculationOutput.toFixed(12)));
             inputHistory = calculationOutput.toString();
             operator = '';
             equal = true;
@@ -118,9 +125,8 @@ $(document).ready(function () {
 
     function clearIfEqual() {
         if (equal) {
-            document.querySelector('#displayNum').innerHTML = '';
-            document.querySelector('#displayOpr').innerHTML = '';
+            $displayNumber.html('');
+            $displayOperator.html('');
         }
         equal = false;
     }
-});
