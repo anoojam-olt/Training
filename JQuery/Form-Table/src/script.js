@@ -63,6 +63,7 @@
                 minlength: 3,
                 maxlength: 10,
                 number: true,
+                tymDigits: true,
             },
             hobbies: {
                 required: true,
@@ -125,6 +126,7 @@
                 minlength: 'Salary should be at least 3 characters long.',
                 maxlength: 'Salary should not exceed 10 characters.',
                 number: 'Only numbers are allowed.',
+                tymDigits: 'Salary should be at least 3 characters long'
             },
             hobbies: {
                 required: 'Hobbies are required.',
@@ -212,6 +214,11 @@
             const formattedValue = parseFloat(currentValue).toFixed(2);
             $(this).val(formattedValue);
         }
+    });
+
+    $.validator.addMethod("tymDigits", function (value, element) {
+        const digitsBeforeDecimal = value.split('.')[0].length;
+        return digitsBeforeDecimal >= 3;
     });
 
     $.validator.addMethod("validDOB", function (value, element) {
