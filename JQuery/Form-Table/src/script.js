@@ -31,7 +31,7 @@
                 required: true,
                 minlength: 1,
                 maxlength: 100,
-                pattern: /^[a-zA-Z0-9]+(?:\s*[ ,-]\s*[a-zA-Z0-9]+)*$/,
+                pattern: /^[a-zA-Z0-9\s]+(?:[,-][a-zA-Z0-9\s]+)*[,-]?$/,
             },
             phone: {
                 required: true,
@@ -199,7 +199,6 @@
         $('#mainForm').validate().resetForm();
         clearSuccessMessage();
     });
-
 
     // Event listener to format salary input
     $('#salary').on('blur', function () {
