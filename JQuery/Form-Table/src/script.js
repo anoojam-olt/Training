@@ -220,21 +220,21 @@
         }
 
         // Parse the date components
-        var parts = value.split("-");
-        var year = parseInt(parts[0], 10);
-        var month = parseInt(parts[1], 10);
-        var day = parseInt(parts[2], 10);
+        let parts = value.split("-");
+        let year = parseInt(parts[0], 10);
+        let month = parseInt(parts[1], 10);
+        let day = parseInt(parts[2], 10);
 
         // Calculate the current date
-        var currentDate = new Date();
-        var currentYear = currentDate.getFullYear();
+        let currentDate = new Date();
+        let currentYear = currentDate.getFullYear();
 
         // Calculate the minimum and maximum allowed birth years
-        var minYear = currentYear - 100;
-        var maxYear = currentYear - 18;
+        let minYear = currentYear - 100;
+        let maxYear = currentYear - 18;
 
         // Create a Date object for the entered DOB
-        var dobDate = new Date(year, month - 1, day); // Subtract 1 from month to make it zero-based
+        let dobDate = new Date(year, month - 1, day); // Subtract 1 from month to make it zero-based
 
         // Check if the year is within the allowed range
         if (dobDate.getFullYear() < minYear || dobDate.getFullYear() > maxYear) {
