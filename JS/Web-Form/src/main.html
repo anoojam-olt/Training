@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"> 
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Web-Form</title>
+    <title>Web Form</title>
     <!-- Include Bootstrap CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
@@ -22,7 +22,7 @@
 
 <body class="main-container">
     <div class="container mt-5" id="containerBox">
-        <form id="mainForm" name="myForm" action="response.html">
+       <form id="mainForm" action="response.html">
             <h1 id="heading">Registration Form</h1>
             <div class="row p-5" id="main">
                 <div class="col-md-6">
@@ -31,7 +31,7 @@
                         <label for="fullname" name="fname">Full Name:</label>
                         <input type="text" class="form-control" id="fullname" name="fullname">
                         <div class="namefield">
-                            <span id="firstName" class="text-danger"></span>
+                            <span id="nameError" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="form-group">
@@ -40,7 +40,7 @@
                             <div class="form-check">
                                 <input class="form-check-input" type="radio" name="gender" id="male" value="male">
                                 <label class="form-check-label" for="male">Male</label>
-                            </div> &nbsp;&nbsp;&nbsp;
+                            </div> &nbsp; &nbsp; &nbsp;
                             <div class="form-check">
                                 <input class="form-check-input" type="radio" name="gender" id="female" value="female">
                                 <label class="form-check-label" for="female">Female</label>
@@ -51,7 +51,8 @@
                     <div class="form-group">
                         <label for="dob">Date of Birth:</label>
                         <input type="text" class="form-control" id="dob" name="dob" placeholder="YYYY-MM-DD">
-                        <span id="dobError" class="text-danger"></span>
+                        <span id="dobValue" class="text-danger"></span>
+                        <span id="dobResult" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label for="ssn">Social Security Number:</label>
@@ -83,17 +84,17 @@
                                 <input class="form-check-input" type="checkbox" id="emailCheckbox" name="communication"
                                     value="email">
                                 <label class="form-check-label" for="emailCheckbox">Email</label>
-                            </div>&nbsp;&nbsp;&nbsp;
+                            </div> &nbsp; &nbsp; &nbsp;
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="postCheckbox" name="communication"
                                     value="post">
                                 <label class="form-check-label" for="postCheckbox">Post</label>
-                            </div>&nbsp;&nbsp;&nbsp;
+                            </div> &nbsp; &nbsp; &nbsp;
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="phoneCheckbox" name="communication"
                                     value="phone">
                                 <label class="form-check-label" for="phoneCheckbox">Phone</label>
-                            </div>&nbsp;&nbsp;&nbsp;
+                            </div> &nbsp; &nbsp; &nbsp;
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="faxCheckbox" name="communication"
                                     value="fax">
@@ -110,22 +111,22 @@
                     <div class="form-group">
                         <label for="jobTitle">Job Title:</label>
                         <input type="text" class="form-control" id="jobTitle" name="jobTitle">
-                        <span id="jobError" class="text-danger"></span>
+                        <span id="jobTitleSpan" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label for="department">Department:</label>
                         <select class="form-control" id="department" name="department">
                             <option disabled selected value=""> Choose an option</option>
                             <option value="sales">Sales</option>
-                            <option value="marketing">Marketing</option>
+                            <option value="marketings">Marketing</option>
                             <option value="hr">Human Resources</option>
                             <option value="financing">Finance</option>
                             <option value="engineering">Engineering</option>
                             <option value="it">Information Technology(IT)</option>
-                            <option value="customer">Customer Support</option>
+                            <option value="support">Customer Support</option>
                             <option value="design">Design</option>
                         </select>
-                        <span id="departmentValueError" class="text-danger"></span>
+                        <span id="departmentError" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label for="salary">Salary:</label>
@@ -140,7 +141,7 @@
                     <div class="form-group">
                         <label for="notes">Additional Notes:</label>
                         <textarea class="form-control" id="notes" name="notes" rows="4" spellcheck="false"></textarea>
-                        <span id="addNotesError" class="text-danger"></span>
+                        <span id="notesError" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="form-group" id="buttonStyle">
@@ -148,9 +149,12 @@
                     <button type="submit" class="btn btn-primary" id="submitButton">Submit</button>
                 </div>
             </div>
+            <div id="successMessage" class="text-success"></div>
         </form>
+        <!-- Include Bootstrap JS -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     </div>
+    </div>
+    
 </body>
-
 </html>

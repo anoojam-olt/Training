@@ -22,17 +22,17 @@
 
 #cancelButton {
     width: 77px;
-} 
+}
 
-#submitButton{
+#submitButton {
     margin-left: 20px;
 }
 
-#columnTwo{
+#columnTwo {
     padding-top: 10px;
 }
 
-#notes{
+#notes {
     height: 77px;
 }
 
@@ -41,27 +41,27 @@
     color: #f0f8ff;
 }
 
-.form-control{
+.form-control {
     width: 94%;
 }
 
 .communication {
     display: flex;
-    justify-content:flex-start;
+    justify-content: flex-start;
     flex-direction: row;
 }
 
 .form-control:hover {
     background-color: rgb(213, 212, 212);
-    cursor: pointer;   
+    cursor: pointer;
 }
 
-.genderValue{
+.genderValue {
     display: flex;
-    justify-content:flex-start;
+    justify-content: flex-start;
     flex-direction: row;
 }
 
-.row{
+.row {
     margin-left: 0;
 }
