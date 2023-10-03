@@ -31,7 +31,7 @@
                 required: true,
                 minlength: 1,
                 maxlength: 100,
-                pattern: /^[a-zA-Z0-9\s]+(?:[,-][a-zA-Z0-9\s]+)*[,-]?$/,
+                pattern: /^[a-zA-Z0-9\s]+(?:[-,][a-zA-Z0-9\s]+)*[-,]?$/,
             },
             phone: {
                 required: true,
