@@ -151,6 +151,7 @@
             }
         },
     });
+
     // Function to add form data to the table
     function addFormDataToTable(formData) {
         const newRow = $('<tr></tr>'); // Assign newRow here
@@ -227,8 +228,6 @@
         // Calculate the current date
         var currentDate = new Date();
         var currentYear = currentDate.getFullYear();
-        var currentMonth = currentDate.getMonth() + 1;
-        var currentDay = currentDate.getDate();
 
         // Calculate the minimum and maximum allowed birth years
         var minYear = currentYear - 100;
