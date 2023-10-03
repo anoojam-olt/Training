@@ -243,7 +243,7 @@
 
         // Check if the entered month and day are valid for the given year
         if (
-            month !== dobDate.getMonth() + 1 || // Add 1 to the month since it's zero-based
+            month !== dobDate.getMonth() + 1 ||
             day !== dobDate.getDate()
         ) {
             return false;
@@ -338,7 +338,6 @@
         deleteRow(row);
     }
 
-    // Inside the submit handler for the form (typically triggered when the form is successfully validated)
     $('#mainForm').submit(function (e) {
         e.preventDefault(); // Prevent the default form submission behavior
 
@@ -366,9 +365,8 @@
             formDataArray.push(formData);
             console.log(formData);
             addFormDataToTable(formData); // Call the function to add data to the table
-            $('#mainForm').find('.error').remove(); // Clear form errors
-            // You can also reset the form and show a success message here if needed
-            $('#mainForm')[0].reset();
+            $('#mainForm').find('.error').remove(); // Clear form errors   
+            $('#mainForm')[0].reset();// You can also reset the form and show a success message here if needed
             clearSuccessMessage();
             successMessageElement.text('Data added successfully.');
         }
