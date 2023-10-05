@@ -14,6 +14,7 @@ var dataTable = $('table').DataTable({
         { data: 'VehicleTypes', render: renderVehicleTypes }
     ]
 });
+
 var lastSearch = ''; // Store the last search query
 
 $('#searchButton').on('click', function () {
