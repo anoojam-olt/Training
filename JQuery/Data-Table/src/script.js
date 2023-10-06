@@ -27,7 +27,7 @@ $('#searchButton').on('click', function () {
         return;
     }
 
-    // Clear the current table rows
+    // Clear the current table row
     dataTable.clear().draw();
 
     $.ajax({
