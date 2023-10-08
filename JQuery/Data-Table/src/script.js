@@ -82,6 +82,9 @@ searchForm.submit(function (e) {
         return;
     }
 
+    // Clear the searchResults array before making a new request
+    searchResults = [];
+
     var apiUrl = 'https://vpic.nhtsa.dot.gov/api/vehicles/getallmanufacturers?format=json&ManufacturerType=' + searchValue;
 
     $.ajax({
