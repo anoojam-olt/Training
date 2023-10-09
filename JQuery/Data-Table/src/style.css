@@ -1,4 +1,4 @@
-#searchButton{
+#searchButton {
     background-color: #4f81a1;
     color: rgb(247, 248, 249);
     border-radius: 3px;
@@ -6,27 +6,31 @@
 
 #paginationControls {
     display: flex;
-    justify-content: center; 
-    align-items: center; 
+    justify-content: center;
+    align-items: center;
 }
 
 #paginationButtons {
     display: flex;
-    align-items: center; 
-    gap: 10px; 
+    align-items: center;
+    gap: 10px;
 }
 
-.search-box{
+.search-box {
     margin: 8px;
 }
 
-.pageButton{
+.page-button {
     background-color: rgb(29, 100, 76);
     margin: 3px;
     width: 30px;
-    color:#f0f8ff
+    color: #f0f8ff
 }
 
 .ellipsis {
-    margin: 0 5px; 
+    margin: 0 5px;
+}
+
+.search-box {
+    width: 20%;
 }
