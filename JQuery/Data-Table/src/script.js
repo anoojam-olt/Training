@@ -1,5 +1,4 @@
 $(document).ready(function () {
-    // Store element references in variables
     var dataTable = $('#dataTable').DataTable({
         paging: false,
         info: false,
@@ -7,7 +6,8 @@ $(document).ready(function () {
         columns: [
             {
                 data: null,
-                render: function (data, type, _row, meta) {
+                render: function (data, type, row, meta) {
+                    console.log(row);
                     if (type === 'display') {
                         var siNo = (currentPage - 1) * 10 + meta.row + 1;
                         return siNo;
@@ -15,22 +15,14 @@ $(document).ready(function () {
                     return data;
                 },
             },
-            { data: 'Country' },
-            { data: 'Mfr_CommonName' },
-            { data: 'Mfr_ID' },
-            { data: 'Mfr_Name' },
-            {
-                data: 'VehicleTypes',
-                render: function (data) {
-                    if (Array.isArray(data)) {
-                        return data.map(function (item) {
-                            return item.Name;
-                        }).join(', ');
-                    }
-                    return data;
-                },
-            },
+            { data: 'limit' }, // Add ID column
+            { data: 'name' }, // Add Name column
+            { data: 'gender' }, // Add Gender column
+            { data: 'email' }, // Add Email column
+            { data: 'university' },
+            { data: 'bloodGroup' }, // Add Blood Group column
         ],
+        
     });
 
     var prevPageBtn = $('#prevPageBtn');
@@ -42,15 +34,13 @@ $(document).ready(function () {
     var searchInput = $('#searchInput');
     var entriesRange = $('#entriesRange');
     var currentPageElement = $('#currentPage');
-    var totalPagesElement = $('#totalPages');
+    // var totalPagesElement = $('#totalPages');
     var pageButtonsContainer = $('#pageButtons');
 
-    // Hide the initial pagination controls
     prevPageBtn.hide();
     nextPageBtn.hide();
- 
+
     function updateTable(page) {
-        // Clear the DataTable
         dataTable.clear();
 
         if (searchResults.length > 0) {
@@ -58,7 +48,6 @@ $(document).ready(function () {
             var endIndex = startIndex + 10;
             var pageData = searchResults.slice(startIndex, endIndex);
 
-            // Add data to the DataTable
             dataTable.rows.add(pageData);
             dataTable.draw();
         } else {
@@ -66,7 +55,6 @@ $(document).ready(function () {
         }
         updateEntriesRange(page);
 
-        // Hide or show previous and next buttons
         var totalPages = Math.ceil(searchResults.length / 10);
         if (totalPages <= 1) {
             prevPageBtn.hide();
@@ -89,22 +77,18 @@ $(document).ready(function () {
         e.preventDefault();
         var searchValue = searchInput.val().trim();
 
-        var apiUrl = 'https://vpic.nhtsa.dot.gov/api/vehicles/getallmanufacturers?format=json';
-        
-        if (searchValue !== "") {
-            apiUrl += '&ManufacturerType=' + searchValue;
-        }
+        var apiUrl = 'https://dummyjson.com/users'; // Updated API URL
 
         $.ajax({
             url: apiUrl,
             type: 'GET',
             dataType: 'json',
             success: function (data) {
-                searchResults = data.Results || [];
+                searchResults = data || [];
                 currentPage = 1;
                 updateTable(currentPage);
                 currentPageElement.text(currentPage);
-                totalPagesElement.text(Math.ceil(searchResults.length / 10));
+                // totalPagesElement.text(Math.ceil(searchResults.length / 10));
                 updatePageButtons();
                 updateEntriesRange(currentPage);
             },
@@ -120,10 +104,6 @@ $(document).ready(function () {
             updateTable(currentPage);
             currentPageElement.text(currentPage);
             updatePageButtons();
-        }
-        else
-        {
-            prevPageBtn.style.display.none;
         }
     });
 

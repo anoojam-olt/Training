@@ -17,13 +17,7 @@
     <div class="search-box m-3">
         <form id="searchForm">
             <div class="input-group mb-3">
-                <select class="form-select" id="searchInput">
-                    <option selected value=" "> </option>
-                    <option value="Completed Vehicle Manufacturer">Completed Vehicle Manufacturer</option>
-                    <option value="Incomplete Vehicle Manufacturer">Incomplete Vehicle Manufacturer</option>
-                    <option value="Alterer">Alterer</option>
-                    <option value="Replica Vehicle Manufacturer">Replica Vehicle Manufacturer</option>
-                </select> &nbsp; &nbsp;
+                <input type="text" class="form-control" id="searchInput" placeholder="Search...">
                 <button type="submit" class="btn btn-primary">Search</button>
             </div>
         </form>
@@ -32,11 +26,12 @@
         <thead>
             <tr>
                 <th>SI No</th>
-                <th>Country</th>
-                <th>Manufacture Common Name</th>
-                <th>Manufacture ID</th>
-                <th>Manufacture Name</th>
-                <th>Vehicle Types</th>
+                <th>id</th>
+                <th>Name</th>
+                <th>gender</th>
+                <th>email</th>
+                <th>University</th>
+                <th>Blood Group</th>
             </tr>
         </thead>
         <tbody></tbody>
@@ -48,7 +43,7 @@
         <button id="nextPageBtn">Next</button>
     </div>
 
-   <script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 
 </html>

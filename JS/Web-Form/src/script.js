@@ -6,7 +6,6 @@ const employeeIdInput = form.querySelector('[name="employeeId"]');
 const genderOptions = document.querySelectorAll('[name="gender"]');
 const communicationOptions = form.querySelectorAll('[name="communication"]');
 
-
 employeeIdInput.value = generateRandomEmployeeId();
 
 // Clear all error messages
@@ -80,7 +79,6 @@ function clearForm() {
     employeeIdInput.value = generateRandomEmployeeId();
 }
 
-
 // Validation function for the salary field
 function validateSalary(element, minLength, maxLength, regexPattern, errorElementId, errorMessage) {
     const value = element.value.trim();
@@ -117,7 +115,6 @@ clearButton.addEventListener('click', clearForm);
 form.addEventListener('submit', function (event) {
     event.preventDefault();
     clearAllErrorMessages();
-
 
     // Validation functions for specific fields
     const fullnameValid = validateText(form.elements.fullname, 3, 20, /^[a-zA-Z\s]+$/, 'nameError', 'Max.Length - 20, Min.Length - 3, Only alphabets and spaces are allowed.');

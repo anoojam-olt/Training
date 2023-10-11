@@ -1,0 +1,86 @@
+$(document).ready(function() {
+    var dataTable = $('#dataTable').DataTable({
+        searching: false,
+        columns: [
+            {
+                data: null,
+                render: function (data, type, _row, meta) {
+                    if (type === 'display') {
+                        var siNo = (currentPage - 1) * 10 + meta.row + 1;
+                        return siNo;
+                    }
+                    return data;
+                },
+            },
+            { data: 'id' },
+            { data: 'firstName' },
+            { data: 'gender' },
+        ],
+    });
+
+    var searchResults = [];
+    var currentPage = 1;
+
+    var searchForm = $('#searchForm');
+
+    function updateTable(page) {
+        dataTable.clear();
+
+        if (searchResults.length > 0) {
+            var startIndex = (page - 1) * 10;
+            var pageData = searchResults.slice(startIndex, startIndex + 10);
+
+            dataTable.rows.add(pageData);
+            dataTable.draw();
+        } else {
+            console.error('No search results to display');
+        }
+    }
+
+    var currentPageElement = $('#entriesRange');
+    var totalPagesElement = $('#paginationControls');
+
+    function updateEntriesRange(page) {
+        var startIndex = (page - 1) * 10 + 1;
+        var endIndex = Math.min(startIndex + 9, searchResults.length);
+        currentPageElement.text('Showing ' + startIndex + ' to ' + endIndex + ' of ' + searchResults.length + ' entries');
+    }
+
+    searchForm.submit(function (e) {
+        e.preventDefault();
+
+        // Get search values from input fields
+        var idValue = $('#idInput').val();
+        var firstNameValue = $('#firstNameInput').val();
+        var genderValue = $('#genderInput').val();
+
+        // Construct the API URL with search parameters
+        var apiUrl = 'https://dummyjson.com/users?';
+
+        if (idValue) apiUrl += 'id=' + idValue + '&';
+        if (firstNameValue) apiUrl += 'firstName=' + firstNameValue + '&';
+        if (genderValue) apiUrl += 'gender=' + genderValue + '&';
+
+        // Make the API call
+        $.ajax({
+            url: apiUrl,
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                searchResults = data; // Assuming data is an array of objects with id, firstName, gender
+                currentPage = 1;
+
+                // Update DataTable
+                dataTable.clear();
+                dataTable.rows.add(searchResults);
+                dataTable.draw();
+
+                updateEntriesRange(currentPage);
+                totalPagesElement.text(Math.ceil(searchResults.length / 10));
+            },
+            error: function (status, error) {
+                console.error('API call failed:', status, error);
+            }
+        });
+    });
+});
