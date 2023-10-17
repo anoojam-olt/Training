@@ -1,168 +1,106 @@
-$(document).ready(function () {
-    var dataTable = $('#dataTable').DataTable({
-        paging: false,
-        info: false,
-        searching: false,
-        columns: [
-            {
-                data: null,
-                render: function (data, type, row, meta) {
-                    console.log(row);
-                    if (type === 'display') {
-                        var siNo = (currentPage - 1) * 10 + meta.row + 1;
-                        return siNo;
-                    }
-                    return data;
-                },
-            },
-            { data: 'limit' }, // Add ID column
-            { data: 'name' }, // Add Name column
-            { data: 'gender' }, // Add Gender column
-            { data: 'email' }, // Add Email column
-            { data: 'university' },
-            { data: 'bloodGroup' }, // Add Blood Group column
-        ],
-        
+    let currentPage = 1;
+    const rowsPerPage = 50;
+    const dataTable = $('#dataTable').DataTable({
+        dom: 'Bfrtip',
+        buttons: ['excelHtml5', 'csvHtml5', 'pdfHtml5'],
     });
 
-    var prevPageBtn = $('#prevPageBtn');
-    var nextPageBtn = $('#nextPageBtn');
-    var searchResults = [];
-    var currentPage = 1;
-    var buttonsPerPage = 5;
-    var searchForm = $('#searchForm');
-    var searchInput = $('#searchInput');
-    var entriesRange = $('#entriesRange');
-    var currentPageElement = $('#currentPage');
-    // var totalPagesElement = $('#totalPages');
-    var pageButtonsContainer = $('#pageButtons');
-
-    prevPageBtn.hide();
-    nextPageBtn.hide();
-
-    function updateTable(page) {
-        dataTable.clear();
-
-        if (searchResults.length > 0) {
-            var startIndex = (page - 1) * 10;
-            var endIndex = startIndex + 10;
-            var pageData = searchResults.slice(startIndex, endIndex);
-
-            dataTable.rows.add(pageData);
-            dataTable.draw();
-        } else {
-            console.error('No search results to display');
-        }
-        updateEntriesRange(page);
-
-        var totalPages = Math.ceil(searchResults.length / 10);
-        if (totalPages <= 1) {
-            prevPageBtn.hide();
-            nextPageBtn.hide();
-        } else {
-            prevPageBtn.show();
-            nextPageBtn.show();
-        }
+    function updateSerialNumbers() {
+        dataTable.rows().every(function serialNumber(rowIdx) {
+            const data = this.data();
+            data[0] = rowIdx + 1 + (currentPage - 1) * rowsPerPage;
+            this.data(data);
+            return 0;
+        });
     }
 
-    function updateEntriesRange(currentPage) {
-        var totalPages = Math.ceil(searchResults.length / 10);
-        var startIndex = (currentPage - 1) * 10 + 1;
-        var endIndex = Math.min(currentPage * 10, searchResults.length);
-        var entriesRangeText = `Showing ${startIndex} to ${endIndex} of ${searchResults.length} entries`;
-        entriesRange.text(entriesRangeText);
-    }
+    function fetchAndDisplayData() {
+        const searchValueId = $('#searchInputId').val();
+        const searchValueName = $('#searchInputName').val();
 
-    searchForm.submit(function (e) {
-        e.preventDefault();
-        var searchValue = searchInput.val().trim();
+        let searchUrl = 'https://dummyjson.com/users';
 
-        var apiUrl = 'https://dummyjson.com/users'; // Updated API URL
+        if (searchValueId) {
+            searchUrl += `/${encodeURIComponent(searchValueId)}`;
+          }
+        
+          else if (searchValueName) {
+            searchUrl += `/search?q=${encodeURIComponent(searchValueName)}`;
+          }
+
+          else if(searchValueName ===''|| searchValueId === '') {
+               searchUrl+= '?limit=100';    
+            }
+
+        if (!searchValueId && !searchValueName) {
+            $('#customPagination').show();
+        } else {
+            $('#customPagination').hide();
+        }
+        
+        let index = 1;
 
         $.ajax({
-            url: apiUrl,
+            url: searchUrl,
             type: 'GET',
             dataType: 'json',
-            success: function (data) {
-                searchResults = data || [];
-                currentPage = 1;
-                updateTable(currentPage);
-                currentPageElement.text(currentPage);
-                // totalPagesElement.text(Math.ceil(searchResults.length / 10));
-                updatePageButtons();
-                updateEntriesRange(currentPage);
+            success(data) {
+                dataTable.clear().draw();
+                console.log(data);
+                if (Array.isArray(data.users)) {
+                    data.users.forEach((item) => {
+                        dataTable.row.add([
+                            index,
+                            item.id,
+                            item.firstName,
+                            item.lastName,
+                            item.age,
+                            item.gender,
+                            item.phone,
+                            item.bloodGroup,
+                            item.university,
+                            item.email,
+                        ]);
+                        index += 1;
+                    });
+                } else if (data.id) {
+                    dataTable.row.add([
+                        index,
+                        data.id,
+                        data.firstName,
+                        data.lastName,
+                        data.age,
+                        data.gender,
+                        data.phone,
+                        data.bloodGroup,
+                        data.university,
+                        data.email,
+                    ]);
+                }
+
+                dataTable.draw();
+                updateSerialNumbers();
+
+                if (dataTable.page.info().pages <= 1) {
+                    $('#customPagination').hide();
+                } else {
+                    $('#customPagination').show();
+                }
+
+                $('#searchInputId').val('');
+                $('#searchInputName').val('');
+                $('#terms').val('');
             },
-            error: function (status, error) {
-                console.error('API call failed:', status, error);
-            }
-        });
-    });
-
-    prevPageBtn.click(function () {
-        if (currentPage > 1) {
-            currentPage--;
-            updateTable(currentPage);
-            currentPageElement.text(currentPage);
-            updatePageButtons();
-        }
-    });
-
-    nextPageBtn.click(function () {
-        var totalPages = Math.ceil(searchResults.length / 10);
-        if (currentPage < totalPages) {
-            currentPage++;
-            updateTable(currentPage);
-            currentPageElement.text(currentPage);
-            updatePageButtons();
-        }
-    });
-
-    function updatePageButtons() {
-        var totalPages = Math.ceil(searchResults.length / 10);
-        var pageButtonsHtml = '';
-
-        if (totalPages <= buttonsPerPage) {
-            for (var i = 1; i <= totalPages; i++) {
-                pageButtonsHtml += createPageButton(i);
-            }
-        } else {
-            var startPage = Math.max(1, currentPage - Math.floor(buttonsPerPage / 2));
-            var endPage = Math.min(totalPages, startPage + buttonsPerPage - 1);
-
-            if (startPage > 1) {
-                pageButtonsHtml += createPageButton(1);
-                if (startPage > 2) {
-                    pageButtonsHtml += '<span class="ellipsis">...</span>';
-                } else {
-                    pageButtonsHtml += ' ';
-                }
-            }
-
-            for (var i = startPage; i <= endPage; i++) {
-                pageButtonsHtml += createPageButton(i);
-            }
-
-            if (endPage < totalPages) {
-                if (endPage < totalPages - 1) {
-                    pageButtonsHtml += '<span class="ellipsis">...</span>';
-                } else {
-                    pageButtonsHtml += ' ';
-                }
-                pageButtonsHtml += createPageButton(totalPages);
-            }
-        }
-        pageButtonsContainer.html(pageButtonsHtml);
-
-        $('.page-button').click(function () {
-            var page = parseInt($(this).data('page'));
-            currentPage = page;
-            updateTable(currentPage);
-            currentPageElement.text(currentPage);
-            updatePageButtons();
+            error(xhr) {
+                console.error(xhr, 'Error fetching data.');
+            },
         });
     }
 
-    function createPageButton(page) {
-        return '<button class="page-button" data-page="' + page + '">' + page + '</button>';
-    }
-});
+    $('#searchForm').submit((e) => {
+        e.preventDefault();
+        fetchAndDisplayData();
+    });
+    
+
+    
