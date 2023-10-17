@@ -1,3 +1,4 @@
+$(document).ready(function() {
     let currentPage = 1;
     const rowsPerPage = 50;
     const dataTable = $('#dataTable').DataTable({
@@ -22,22 +23,18 @@
 
         if (searchValueId) {
             searchUrl += `/${encodeURIComponent(searchValueId)}`;
-          }
-        
-          else if (searchValueName) {
+        } else if (searchValueName) {
             searchUrl += `/search?q=${encodeURIComponent(searchValueName)}`;
-          }
-
-          else if(searchValueName ===''|| searchValueId === '') {
-               searchUrl+= '?limit=100';    
-            }
+        } else if (searchValueName === '' || searchValueId === '') {
+            searchUrl += '?limit=100';
+        }
 
         if (!searchValueId && !searchValueName) {
             $('#customPagination').show();
         } else {
             $('#customPagination').hide();
         }
-        
+
         let index = 1;
 
         $.ajax({
@@ -97,10 +94,8 @@
         });
     }
 
-    $('#searchForm').submit((e) => {
+    $('#searchForm').submit(function(e) {
         e.preventDefault();
         fetchAndDisplayData();
     });
-    
-
-    
+});
